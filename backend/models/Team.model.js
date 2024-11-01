@@ -13,4 +13,6 @@ const teamSchema = new mongoose.Schema({
     Chat:[String],
 })
 
-export default Team = mongoose.Schema("Team", teamSchema);
+const Team = mongoose.model("Team", teamSchema);
+export { Team };
+

@@ -1,4 +1,5 @@
-import mongoose from 'mongoose'
+import mongoose from 'mongoose';
+
 const huntSchema = new mongoose.Schema({
     title: String,
     host: String,
@@ -21,5 +22,6 @@ const huntSchema = new mongoose.Schema({
     difficulty: ["easy", "medium", "hard"],
     solved:Number
 })
-export default Hunt = mongoose.Schema("Hunt", huntSchema)
+const Hunt = mongoose.model("Hunt", huntSchema)
+export { Hunt };
 

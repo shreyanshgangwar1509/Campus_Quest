@@ -18,7 +18,7 @@ const userSchema =new  mongoose.Schema({
     },
     huntsolved:[{
             type: mongoose.Schema.Types.ObjectId,
-        ref: "Hunt",
+            ref: "Hunt",
     }],
     teams: [
         {
@@ -30,6 +30,6 @@ const userSchema =new  mongoose.Schema({
     rating:Number
 }, {timestamp:true})
 
-  const User = mongoose.Schema("User", userSchema)
+  const User = mongoose.model("User", userSchema)
 export { User }
 
