@@ -1,63 +1,96 @@
-import HuntModel from "../models/Hunt.model";
+import { Hunt } from "../models/Hunt.model.js";
 
 
-const createHunt = async (req, res) => {
-    const { title, host, description, Questions, Answers, Hint1, difficulty } = req.body;
-    
-    const existhunt = await HuntModel.findOne({title});
-    if (existhunt) {
-        res.status(400).json({
-            message:"Hunt with this titel name is already exists"
-        })
-    }
-    const newhunt = await new HuntModel({
-        title,
-        host,
-        description,
-        Questions,
-        Answers,
-        Hint1,
-        difficulty,
-    })
-    await newhunt.save();
-    res.status(200).json({
-        message:"Hunt created successfully"
-    })
-    return;
-}
 
-const allhunts = async (req, res) => {
-    const hunts = await HuntModel.findall();
-    return hunts;
-}
-
-const huntinfo = async (req, res) => {
+// Create a new hunt
+export const createHunt = async (req, res) => {
+    const { title, host, description, questions, answers, hints, difficulty } = req.body;
     try {
-        const huntid = req.params;
-        const hunt = await HuntModel.findOne({ huntid });
+        const newHunt = new Hunt({ title, host, description, questions, answers, hints, difficulty });
+        await newHunt.save();
+        res.status(201).json(newHunt);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+// Get all hunts
+export const getAllHunts = async (req, res) => {
+    try {
+        const hunts = await Hunt.find();
+        res.status(200).json(hunts);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+// Get a specific hunt by ID
+export const getHuntById = async (req, res) => {
+    try {
+        const hunt = await Hunt.findById(req.params.id);
         if (!hunt) {
-            res.status(400).json({
-                message:"No such hunt exists"
-            })
-            return;
+            return res.status(404).json({ message: 'Hunt not found' });
         }
-        return hunt;
+        res.status(200).json(hunt);
     } catch (error) {
-        console.log('Error in finding hunt');
-        
+        res.status(500).json({ error: error.message });
     }
-}
-const takePartInHunt = async (req, res) => {
+};
+
+// Update leaderboard
+export const updateLeaderboard = async (req, res) => {
+    const { userId, score, time } = req.body;
     try {
-        
+        const hunt = await Hunt.findById(req.params.id);
+        if (!hunt) {
+            return res.status(404).json({ message: 'Hunt not found' });
+        }
+        hunt.leaderboard.push({ user: userId, score, time });
+        await hunt.save();
+        res.status(201).json(hunt.leaderboard);
     } catch (error) {
-        
+        res.status(500).json({ error: error.message });
     }
-}
-const endhunt = async (req, res) => {
+};
+
+// Get leaderboard
+export const getLeaderboard = async (req, res) => {
     try {
-        
+        const hunt = await Hunt.findById(req.params.id).populate('leaderboard.user');
+        const leaderboard = hunt.leaderboard.sort((a, b) => b.score - a.score);
+        res.status(200).json(leaderboard);
     } catch (error) {
-        
+        res.status(500).json({ error: error.message });
     }
-}
+};
+// Import preset hunts
+router.post('/import', async (req, res) => {
+    try {
+        await Hunt.insertMany(presetHunts);
+        res.status(201).json({ message: 'Pre-set hunts added successfully.' });
+    } catch (error) {
+        res.status(500).json({ message: 'Error adding pre-set hunts.', error });
+    }
+});
+// router.post('/hunts/:id/leaderboard', async (req, res) => {
+//     const { userId, teamId, score, time } = req.body;
+//     try {
+//         const hunt = await Hunt.findById(req.params.id);
+//         hunt.leaderboard.push({ user: userId, team: teamId, score, time });
+//         await hunt.save();
+//         res.status(201).json({ message: 'Score added successfully' });
+//     } catch (error) {
+//         res.status(500).json({ error: error.message });
+//     }
+// });
+
+// // Retrieve leaderboard
+// router.get('/hunts/:id/leaderboard', async (req, res) => {
+//     try {
+//         const hunt = await Hunt.findById(req.params.id).populate('leaderboard.user').populate('leaderboard.team');
+//         const leaderboard = hunt.leaderboard.sort((a, b) => b.score - a.score); // Sort by score descending
+//         res.status(200).json(leaderboard);
+//     } catch (error) {
+//         res.status(500).json({ error: error.message });
+//     }
+// });

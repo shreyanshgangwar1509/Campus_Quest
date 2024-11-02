@@ -1,0 +1,24 @@
+import React from 'react';
+
+const HuntCard = ({ title, host, description, difficulty, questionsCount, solved }) => {
+    return (
+        <div className="max-w-sm rounded overflow-hidden shadow-lg bg-white transition-transform transform hover:scale-105 duration-300">
+            <div className="px-6 py-4">
+                <div className="font-bold text-xl mb-2">{title}</div>
+                <p className="text-gray-700 text-base">
+                    Host: {host}
+                </p>
+                <p className="text-gray-600 text-sm mb-4">{description}</p>
+                <p className="text-gray-600 text-sm">Difficulty: <span className={`font-semibold ${difficulty === "easy" ? "text-green-500" : difficulty === "medium" ? "text-yellow-500" : "text-red-500"}`}>{difficulty}</span></p>
+                <p className="text-gray-600 text-sm">Questions: {questionsCount} | Solved: {solved}</p>
+            </div>
+            <div className="px-6 pt-4 pb-2">
+                <button className="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    Join Hunt
+                </button>
+            </div>
+        </div>
+    );
+};
+
+export default HuntCard;

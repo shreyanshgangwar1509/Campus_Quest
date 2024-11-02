@@ -1,20 +1,22 @@
 import mongoose from 'mongoose';
 
+const leaderboardEntrySchema = new mongoose.Schema({
+    team: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Team",
+    },
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+    },
+    score: { type: Number, required: true, default: 0 },
+    time: { type: Number, required: true },
+});
+
 const huntSchema = new mongoose.Schema({
     title: String,
     host: String,
-    leaderboard:[
-      {
-        type: mongoose.Schema.Types.ObjectId,
-            ref: "Team",
-        time:String,
-        },
-        {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-        time:String,
-        }
-    ],
+    leaderboard: [leaderboardEntrySchema],
     description: String,
     Questions: [String],
     Answers: [String],

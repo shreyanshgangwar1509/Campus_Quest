@@ -1,12 +1,28 @@
+// routes/hunt.routes.js
 import express from 'express';
+import {
+    createHunt,
+    getAllHunts,
+    getHuntById,
+    getLeaderboard,
+    updateLeaderboard,
+} from '../Controller/hunt.controller.js';
+
 const router = express.Router();
 
-router.post("/createHunt", createHunt); //testing Done
+// Create a new hunt
+router.post('/', createHunt);
 
-router.get('/hunts', allhunts);
+// Get all hunts
+router.get('/', getAllHunts);
 
-router.get('hunts/:huntId', huntinfo);
+// Get a specific hunt by ID
+router.get('/:id', getHuntById);
 
-router.post('/hunts/:huntId/takepart', takePartInHunt);
+// Update leaderboard
+router.post('/:id/leaderboard', updateLeaderboard);
 
+// Get leaderboard
+router.get('/:id/leaderboard', getLeaderboard);
 
+export default router;
