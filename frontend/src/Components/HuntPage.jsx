@@ -1,14 +1,23 @@
 import React, { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import HuntTimer from './HuntTimer';
 import Leaderboard from './LeaderBoard';
- // Assume you have a leaderboard component
+import HuntForm from './HuntForm';
+import { useNavigate } from 'react-router-dom';
+
+
 
 const HuntPage = ({ hunt }) => {
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+        navigate('/HuntForm');  // Navigate to the HuntForm route
+    };
     const [isHuntActive, setHuntActive] = useState(false);
     const [score, setScore] = useState(0);
     const [remainingTime, setRemainingTime] = useState(60 * 60); // Example: 1 hour in seconds
     const [usedHints, setUsedHints] = useState(0);
-    const [hints, setHints] = useState(hunt.hints); // Assuming hunt object has hints
+    //const [hints, setHints] = useState(hunt.hints); // Assuming hunt object has hints
     const [visibleHints, setVisibleHints] = useState([]); // To track which hints have been shown
 
     useEffect(() => {
@@ -35,17 +44,17 @@ const HuntPage = ({ hunt }) => {
     };
 
     const handleUseHint = () => {
-        if (usedHints < hints.length) {
-            setVisibleHints((prev) => [...prev, hints[usedHints]]); // Show the next hint
-            setScore((prev) => prev - 10); // Deduct points for using a hint
-            setRemainingTime((prev) => prev + 600); // Add 10 minutes in seconds
-            setUsedHints((prev) => prev + 1); // Increment used hints
-        }
+        // if (usedHints < hints.length) {
+        //     setVisibleHints((prev) => [...prev, hints[usedHints]]); // Show the next hint
+        //     setScore((prev) => prev - 10); // Deduct points for using a hint
+        //     setRemainingTime((prev) => prev + 600); // Add 10 minutes in seconds
+        //     setUsedHints((prev) => prev + 1); // Increment used hints
+        // }
     };
 
     return (
         <div className="p-6">
-            <h1 className="text-2xl font-bold">{hunt.title}</h1>
+            {/* <h1 className="text-2xl font-bold">{hunt.title}</h1> */}
             <button
                 onClick={isHuntActive ? handleEndHunt : handleStartHunt}
                 className={`mt-4 px-4 py-2 rounded ${isHuntActive ? 'bg-red-500' : 'bg-green-500'} text-white`}
@@ -72,7 +81,17 @@ const HuntPage = ({ hunt }) => {
                 </div>
             )}
 
-            <Leaderboard huntId={hunt._id} />
+            {/* <Leaderboard huntId={hunt._id} /> */}
+            <button className="bg-blue-500 mt-6 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            onClick={handleClick}>
+                Add New Hunt 
+            </button>
+
+            <Routes>
+                    <Route path="/HuntForm" element={<HuntForm />} />
+                    {/* Other routes can go here */}
+            </Routes>
+
         </div>
     );
 };
