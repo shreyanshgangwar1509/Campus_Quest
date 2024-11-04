@@ -2,7 +2,7 @@ import React from 'react';
 
 const HuntCard = ({ title, host, description, difficulty, questionsCount, solved }) => {
     return (
-        <div className="max-w-sm rounded overflow-hidden shadow-lg bg-white transition-transform transform hover:scale-105 duration-300">
+        <div className="max-w-sm rounded overflow-hidden shadow-lg bg-white mt-1 transition-transform transform hover:scale-105 duration-300">
             <div className="px-6 py-4">
                 <div className="font-bold text-xl mb-2">{title}</div>
                 <p className="text-gray-700 text-base">
