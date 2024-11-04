@@ -1,5 +1,5 @@
-import { Hunt } from "../models/Hunt.model.js";
-
+import Hunt from "../models/Hunt.model.js";
+import presetHunts from '../utills/PreSetHunts.js';
 
 
 // Create a new hunt
@@ -64,14 +64,15 @@ export const getLeaderboard = async (req, res) => {
     }
 };
 // Import preset hunts
-router.post('/import', async (req, res) => {
+
+export const presethunt =  async (req, res) => {
     try {
         await Hunt.insertMany(presetHunts);
         res.status(201).json({ message: 'Pre-set hunts added successfully.' });
     } catch (error) {
         res.status(500).json({ message: 'Error adding pre-set hunts.', error });
     }
-});
+};
 // router.post('/hunts/:id/leaderboard', async (req, res) => {
 //     const { userId, teamId, score, time } = req.body;
 //     try {

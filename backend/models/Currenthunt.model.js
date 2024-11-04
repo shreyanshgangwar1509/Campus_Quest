@@ -21,5 +21,5 @@ const currenthunt = new mongoose.Schema({
 
 }, { timestamps: true })
 const CurrentHunt = mongoose.model("CurrentHunt", currenthunt);
-export { CurrentHunt };
+export default CurrentHunt ;
 

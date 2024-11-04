@@ -12,16 +12,14 @@ const chatSchema = new mongoose.Schema({
         ref: 'User',
         required: true,
     },
-    message: {
+    messages: [{
         type: String,
         required: true,
-    },
-    timestamp: {
-        type: Date,
-        default: Date.now,
-    },
-});
+    }],
+},{timestamps:true,}
+        
+);
 
 const Chat = mongoose.model('Chat', chatSchema);
-export { Chat };
+export default Chat ;
 

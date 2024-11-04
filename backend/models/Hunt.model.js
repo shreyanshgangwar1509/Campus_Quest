@@ -25,5 +25,5 @@ const huntSchema = new mongoose.Schema({
     solved:Number
 })
 const Hunt = mongoose.model("Hunt", huntSchema)
-export { Hunt };
+export default Hunt ;
 

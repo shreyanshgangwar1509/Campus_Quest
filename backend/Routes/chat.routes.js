@@ -1,13 +1,14 @@
 // routes/chat.routes.js
 import express from 'express';
-import { getMessages, sendMessage } from '../Controller/Chat.controller.js';
+import { getMessages, getMessagesteam, sendMessage } from '../Controller/Chat.controller.js';
 
 const router = express.Router();
 
 // Send a message
-router.post('/send', sendMessage);
+router.post('/send/:id', sendMessage);
 
+router.get('/:userId',getMessages)
 // Get messages for a team
-router.get('/:teamId', getMessages);
+router.get('/:teamId', getMessagesteam);
 
 export default router;

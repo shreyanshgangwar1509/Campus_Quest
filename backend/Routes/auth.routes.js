@@ -1,7 +1,7 @@
 import express from 'express';
 import passport from 'passport';
-import { Login, Register } from '../Controller/auth.controllers.js';
-import { getUserProfile } from '../Controller/user.controller.js';
+import { getProfile, Login, logoutUser, Register, verifyemail } from '../Controller/auth.controllers.js';
+
 import authMiddleware from '../middleware/auth.middleware.js';
 
 const router = express.Router();
@@ -10,12 +10,11 @@ router.post('/register', Register);
 
 router.post('/login', Login);
 
-router.post('/verifyemail', verification);
-
-router.post('/forgetpassword', forgetpassword);
-
+router.post('/verifyemail', verifyemail);
+// router.post('/forgetpassword', forgetpassword);
+router.post('/logout', logoutUser);
 // Protected route
-router.get('/profile', authMiddleware, getUserProfile); // Protect this route with authMiddleware
+router.get('/profile', authMiddleware, getProfile); // Protect this route with authMiddleware
 
 
 // Auth with Google

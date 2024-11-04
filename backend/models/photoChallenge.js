@@ -19,5 +19,5 @@ const photoChallengeSchema = new mongoose.Schema({
 });
 
 const PhotoChallenge = mongoose.model('PhotoChallenge', photoChallengeSchema);
-export { PhotoChallenge };
+export default PhotoChallenge ;
 

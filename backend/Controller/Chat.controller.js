@@ -1,5 +1,5 @@
 // controllers/chat.controller.js
-import { Chat } from '../models/Chat.js';
+import Chat from '../models/Chat.js';
 
 // Send a message
 export const sendMessage = async (req, res) => {
@@ -15,6 +15,16 @@ export const sendMessage = async (req, res) => {
 
 // Get messages for a team
 export const getMessages = async (req, res) => {
+    const { userId } = req.params;
+    try {
+        const messages = await Chat.find({ userId }).populate('userId', 'username'); // Populate userId to get usernames
+        res.status(200).json(messages);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+export const getMessagesteam = async (req, res) => {
     const { teamId } = req.params;
     try {
         const messages = await Chat.find({ teamId }).populate('userId', 'username'); // Populate userId to get usernames
@@ -23,3 +33,18 @@ export const getMessages = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
+
+
+export const getActiveUsers = async (req,res) => {
+    try {
+        const loggedInUserId = req.user.userId;
+
+        const filteredUsers = await User.find({_id:{$ne: loggedInUserId}}).select("-password")   // baki sare doc. expcept for (loggedInUserId)
+        res.status(200).json(filteredUsers);
+
+    } catch (error) {
+        console.log("Error in user Controller -> ",error)
+        res.status(500).json({error:"internal server error"});        
+    }
+
+}
