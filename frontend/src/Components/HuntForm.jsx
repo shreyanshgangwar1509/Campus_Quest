@@ -1,4 +1,9 @@
+import axios from 'axios';
 import React, { useState } from 'react';
+import { Navigate } from 'react-router-dom';
+const api = axios.create({
+  baseURL: "http://localhost:3000", // Set the base URL here
+});
 
 function HuntForm() {
     const [title, setTitle] = useState('');
@@ -20,12 +25,19 @@ function HuntForm() {
         setQuestions(newQuestions);
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async(e) => {
         e.preventDefault();
         const huntData = { title, host, description, difficulty, questionsCount, questions };
-        console.log(huntData); // For now, just log the data
         
-        alert("Hunt created successfully!");
+        try {
+            const response = await api.post('/api/hunts/createhunt', { huntData });
+            
+            console.log(huntData); // For now, just log the data
+            Navigate('/allhunts');
+            alert("Hunt created successfully!");
+        } catch (error) {
+            
+        }
     };
 
     return (

@@ -1,18 +1,28 @@
 import axios from "axios";
 import { useState } from "react";
-
+import { useNavigate } from "react-router-dom";
+const api = axios.create({
+  baseURL: "http://localhost:3000", // Set the base URL here
+});
 export default function VerifyOtp({email}) {
   const [otp, setOtp] = useState("");
   const [message, setMessage] = useState("");
-
+  const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post("/api/verify-otp", { otp });
-      setMessage(response.data.message);
-    } catch (error) {
-      setMessage("Invalid OTP or OTP expired. Please try again.");
-    }
+   try {
+  const response = await api.post("/api/auth/verifyemail", { otp, email });
+  setMessage(response.data.message);
+  navigate('/');
+} catch (error) {
+  console.error("Error during OTP verification:", error.response?.data); // Improved logging
+  if (error.response) {
+    setMessage(error.response.data.message || "Invalid OTP or OTP expired. Please try again.");
+  } else {
+    setMessage("An unexpected error occurred. Please try again.");
+  }
+}
+
   };
 
   return (

@@ -1,11 +1,13 @@
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import './App.css';
+import Dashboard from './Components/Dashboard';
+import Navbar from './Components/Navbar';
+import Allhunts from './Pages/Allhunts';
 import LoginPage from './Pages/Auth/Login';
 import RegisterPage from './Pages/Auth/Register';
-import Navbar from './Components/Navbar';
-import Dashboard from './Components/Dashboard';
-import HuntPage from './Components/HuntPage';
-import HuntForm from './Components/HuntForm';
+import VerifyOtp from './Pages/Auth/Verify-Email';
+import CreateHunt from './Pages/CreateHunt';
+import Home from './Pages/Home/Home';
 
 
 
@@ -19,18 +21,14 @@ function App() {
       </div> */}
       <Navbar />
       {/* <Dashboard/> */}
-            <Routes>
-                <Route path="/login" element={<LoginPage />} />
-                <Route path="/register" element={<RegisterPage />} />
-        <Route path="/HuntPage" element={<HuntPage />} />
-        <Route path="/Dashboard" element={<Dashboard />} />
-        <Route path="/HuntForm" element={<HuntForm />} />
-
-        
-        
-                
-        
-                
+      <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
+            <Route path="/allhunts" element={<Allhunts />} />
+            <Route path="/Dashboard" element={<Dashboard />} />
+            <Route path="/createhunt" element={<CreateHunt />} />
+            <Route path='/verifyemail' element={<VerifyOtp/>}/>
             </Routes>
     </Router>
     

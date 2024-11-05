@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import HuntTimer from './HuntTimer';
-import Leaderboard from './LeaderBoard';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import HuntForm from './HuntForm';
-import { useNavigate } from 'react-router-dom';
+import HuntTimer from './HuntTimer';
 
 
 
@@ -11,7 +9,7 @@ const HuntPage = ({ hunt }) => {
     const navigate = useNavigate();
 
     const handleClick = () => {
-        navigate('/HuntForm');  // Navigate to the HuntForm route
+        navigate('/createhunt');  // Navigate to the HuntForm route
     };
     const [isHuntActive, setHuntActive] = useState(false);
     const [score, setScore] = useState(0);

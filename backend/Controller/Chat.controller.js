@@ -1,50 +1,80 @@
-// controllers/chat.controller.js
 import Chat from '../models/Chat.js';
+import Message from '../models/message.model.js';
+import { getReceiverSocketId } from '../socket/socket.js';
 
-// Send a message
-export const sendMessage = async (req, res) => {
-    const { teamId, userId, message } = req.body;
+// Retrieve all messages for a chat
+export const getMessage = async (req, res) => {
     try {
-        const newMessage = new Chat({ teamId, userId, message });
-        await newMessage.save();
+        const { id: userToChatId } = req.params;
+        const senderId = req.user._id;
+
+        // Find the chat with both participants
+        const chat = await Chat.findOne({
+            participants: { $all: [senderId, userToChatId] }
+        }).populate("messages");
+
+        if (!chat) return res.status(200).json([]); // No chat history found
+
+        res.status(200).json(chat.messages);
+    } catch (error) {
+        console.error("Error in getMessages controller:", error.message);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+};
+
+// Send a message and add it to the chat
+export const postMessage = async (req, res, io) => {  // io passed here for socket
+    try {
+        const { message } = req.body;
+        const { id: receiverId } = req.params;
+        const senderId = req.user._id;
+
+        // Find or create the chat
+        let chat = await Chat.findOne({
+            participants: { $all: [senderId, receiverId] }
+        });
+
+        if (!chat) {
+            chat = await Chat.create({
+                participants: [senderId, receiverId],
+                messages: []
+            });
+        }
+
+        // Create a new message
+        const newMessage = new Message({ 
+            senderId,
+            receiverId,
+            message
+        });
+
+        // Save the message to the chat
+        chat.messages.push(newMessage._id);
+        await Promise.all([chat.save(), newMessage.save()]);
+
+        // Send real-time message using Socket.IO
+        const receiverSocketId = getReceiverSocketId(receiverId);
+        if (receiverSocketId) {
+            io.to(receiverSocketId).emit("newMessage", newMessage);
+        }
+
         res.status(201).json(newMessage);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        console.error("Error in postMessage controller:", error.message);
+        res.status(500).json({ error: "Internal Server Error" });
     }
 };
 
-// Get messages for a team
-export const getMessages = async (req, res) => {
-    const { userId } = req.params;
-    try {
-        const messages = await Chat.find({ userId }).populate('userId', 'username'); // Populate userId to get usernames
-        res.status(200).json(messages);
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-};
-
-export const getMessagesteam = async (req, res) => {
-    const { teamId } = req.params;
-    try {
-        const messages = await Chat.find({ teamId }).populate('userId', 'username'); // Populate userId to get usernames
-        res.status(200).json(messages);
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-};
-
-
-export const getActiveUsers = async (req,res) => {
+// Get list of active users excluding the logged-in user
+export const getActiveUsers = async (req, res) => {
     try {
         const loggedInUserId = req.user.userId;
 
-        const filteredUsers = await User.find({_id:{$ne: loggedInUserId}}).select("-password")   // baki sare doc. expcept for (loggedInUserId)
+        // Fetch all users except the logged-in user
+        const filteredUsers = await User.find({ _id: { $ne: loggedInUserId } }).select("-password");
         res.status(200).json(filteredUsers);
-
     } catch (error) {
-        console.log("Error in user Controller -> ",error)
-        res.status(500).json({error:"internal server error"});        
+        console.error("Error in getActiveUsers controller:", error.message);
+        res.status(500).json({ error: "Internal Server Error" });
     }
-
-}
+};

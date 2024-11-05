@@ -84,13 +84,18 @@
 
 import axios from 'axios';
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
+const api = axios.create({
+  baseURL: "http://localhost:3000", // Set the base URL here
+});
 const Register = () => {
     const [email, setEmail] = useState('');
+    const [username, setusername] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [error, setError] = useState('');
-
+    const navigate = useNavigate();
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (password !== confirmPassword) {
@@ -98,9 +103,10 @@ const Register = () => {
             return;
         }
         try {
-            await axios.post('/api/auth/register', { email, password });
+            const response  = await api.post('/api/auth/register', { email, password,username });
             // Redirect to login or show a success message
-            window.location.href = '/verifyemail';
+            if(response.status===200)
+            navigate('/verifyemail',{ state: { email } });
 
         } catch (err) {
             setError('Registration failed');
@@ -113,6 +119,14 @@ const Register = () => {
             {error && <p className="text-red-500">{error}</p>}
             <form onSubmit={handleSubmit} className="mt-4">
                 <div>
+                    <label className="block mb-2">Username</label>
+                    <input
+                        type="text"
+                        value={username}
+                        onChange={(e) => setusername(e.target.value)}
+                        className="border p-2 w-full"
+                        required
+                    />
                     <label className="block mb-2">Email</label>
                     <input
                         type="email"

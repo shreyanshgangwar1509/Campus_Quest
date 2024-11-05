@@ -11,4 +11,5 @@ export const setToken = (res, { userId }) => {
     res.cookie('token', token, {
         httpOnly: true,
     });
+    return token;
 };

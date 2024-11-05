@@ -6,7 +6,16 @@ import presetHunts from '../utills/PreSetHunts.js';
 export const createHunt = async (req, res) => {
     const { title, host, description, questions, answers, hints, difficulty } = req.body;
     try {
-        const newHunt = new Hunt({ title, host, description, questions, answers, hints, difficulty });
+        const newHunt = new Hunt({
+            title,
+            host,
+            description,
+            Questions: Array.isArray(questions) ? questions : [], 
+            Answers: Array.isArray(answers) ? answers : [], 
+            Hint1: Array.isArray(hints) ? hints : [], 
+            difficulty,
+            solved: 0
+        });
         await newHunt.save();
         res.status(201).json(newHunt);
     } catch (error) {

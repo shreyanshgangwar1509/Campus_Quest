@@ -13,7 +13,6 @@ const messageSchema = new Schema({
     },
     message:{
         type:String,
-        required:true
     }
 },
   {
@@ -21,4 +20,5 @@ const messageSchema = new Schema({
   }
 );
 
-export const Message = model("Message",messageSchema);
+const Message = model("Message", messageSchema);
+export default Message;

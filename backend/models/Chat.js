@@ -1,20 +1,14 @@
 // models/Chat.js
 import mongoose from 'mongoose';
-
 const chatSchema = new mongoose.Schema({
-    teamId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Team',
-        required: true,
-    },
-    userId: {
+    
+    participants: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
-        required: true,
-    },
+    }],
     messages: [{
-        type: String,
-        required: true,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Message',
     }],
 },{timestamps:true,}
         
