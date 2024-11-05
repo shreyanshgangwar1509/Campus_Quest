@@ -96,23 +96,13 @@ export default function Dashboard() {
       {/* Sidebar */}
       <aside className="w-64 bg-blue-600 text-white shadow-lg">
         <div className="p-6 text-center">
-          <h2 className="text-2xl font-semibold">Dashboard</h2>
-          <p className="text-sm mt-2">Welcome</p>
+          <h2 className="text-2xl font-semibold">User</h2>
+          
         </div>
         <nav className="mt-8">
           <ul className="space-y-2">
-            <li>
-              <Link to="/dashboard" className="flex items-center py-2 px-4 hover:bg-blue-700 transition-all">
-                <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4.586l3.293 3.293 1.414-1.414L12 12V8z" /></svg>
-                Home
-              </Link>
-            </li>
-            <li>
-              <Link to="/dashboard/profile" className="flex items-center py-2 px-4 hover:bg-blue-700 transition-all">
-                <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 11.403V20H8V11.403M4 8V4h16v4M4 20h16v4H4v-4z" /></svg>
-                Profile
-              </Link>
-            </li>
+            
+            
             <li>
               <Link to="/dashboard/settings" className="flex items-center py-2 px-4 hover:bg-blue-700 transition-all">
                 <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 17h5l-1.405 2.449A1 1 0 0118 21H6a1 1 0 01-.595-1.805L7 17h5m0-5h5l-1.405 2.449A1 1 0 0118 11H6a1 1 0 01-.595-1.805L7 7h5" /></svg>
