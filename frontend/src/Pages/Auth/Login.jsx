@@ -21,10 +21,7 @@ export default function LoginPage() {
       const response = await api.post("/api/auth/login", { email, password });
       
       // Assuming the backend sends a JWT token on successful login
-      if (response.data.token) {
-        localStorage.setItem("token", response.data.token); // Store the token for future use
-        navigate("/dashboard"); // Redirect to the dashboard or another protected page
-      }
+      navigate('/');
     } catch (error) {
       setErrorMessage("Invalid email or password. Please try again.");
     }

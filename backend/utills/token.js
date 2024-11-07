@@ -3,13 +3,10 @@ import jwt from "jsonwebtoken";
 
 dotenv.config();
 
-export const setToken = (res, { userId }) => {
-    const token = jwt.sign({ userId: userId }, process.env.JWT_SECRET, {
-        expiresIn: '2h'
+export const setToken = (user) => {
+    const token = jwt.sign({ user }, process.env.JET_SECERET, {
+        expiresIn: '10m'
     });
 
-    res.cookie('token', token, {
-        httpOnly: true,
-    });
     return token;
 };

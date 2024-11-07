@@ -1,7 +1,41 @@
 import User from '../models/User.model.js';
 import VerificationToken from '../models/VerificationToken.js';
 import sendverificationemail from '../utills/send-otp.js';
+// auth.controller.js
+import { OAuth2Client } from 'google-auth-library';
+import jwt from 'jsonwebtoken';
 import { setToken } from '../utills/token.js';
+// Initialize OAuth2Client with your Google Client ID
+const client = new OAuth2Client('YOUR_GOOGLE_CLIENT_ID');
+
+export const googleSignIn = async (req, res) => {
+  const { token } = req.body;
+
+  try {
+    // Verify the token
+    const ticket = await client.verifyIdToken({
+      idToken: token,
+      audience: 'YOUR_GOOGLE_CLIENT_ID',
+    });
+
+    const payload = ticket.getPayload(); // Contains user info
+    const { sub, email, name, picture } = payload;
+
+    // You can create or find the user in your database here
+    const user = {
+      googleId: sub,
+      email,
+      name,
+      picture,
+    };
+
+    // Respond with user data or handle it as needed
+    res.status(200).json(user);
+  } catch (error) {
+    console.error('Error verifying Google ID token:', error);
+    res.status(401).json({ message: 'Invalid Google ID token' });
+  }
+};
 
 export const Register = async (req, res) => {
   console.log('auth routes called register');
@@ -22,7 +56,7 @@ export const Register = async (req, res) => {
     console.log("User saved successfully:", user);
 
     await sendverificationemail(req,email);
-    return res.status(200).json({ message: "User registered successfully" });
+    return res.status(200).json({ message: "User registered successfully",user });
   } catch (error) {
     console.error("Error in Register function:", error);
     return res.status(500).json({ message: 'Server error', error });
@@ -53,11 +87,17 @@ export const Login = async (req, res) => {
       await sendverificationemail(req,email); 
       return res.status(403).json({ message: 'User not verified. Verification email sent.' });
     }
-    req.session.email = email;
+    const accesstoken = setToken(user);
+    res.cookie(process.env.ACCESS_TOKEN, accesstoken, { httpOnly: true, secure: true });
+    const refereshToken = jwt.sign({ user }, process.env.JET_SECERET || '', { expiresIn: "1d" })
+    res.cookie(process.env.REFERESH_TOKEN, refereshToken, {
+      httpOnly: true,
+      secure: true,
+    
+    });
     // Set token and respond
-    const userId = user._id;
-    const token = setToken(res, { userId });
-    return res.status(200).json({ message: "User logged in successfully" },token);
+    
+    return res.status(200).json({ message: "User logged in successfully" });
   } catch (error) {
     console.error("Error in Login function:", error);
     return res.status(500).json({ message: 'Server error', error });
@@ -67,7 +107,7 @@ export const Login = async (req, res) => {
 export const logoutUser = async (req, res) => {
   try {
     // Clear the cookie; ensure to match the options used when setting the cookie
-    res.clearCookie('token', {
+    res.clearCookie('accesstoken', {
       httpOnly: true, // if set when creating the cookie
       secure: process.env.NODE_ENV === 'production', // if set when creating the cookie
       sameSite: 'Strict', // or 'Lax' depending on your implementation
@@ -79,33 +119,10 @@ export const logoutUser = async (req, res) => {
 };
 
 
-// export const verifyemail = async (req, res) => {
-//   const { otp } = req.body;
-
-//   try {
-//     const email = req.session.email; // Retrieve email from session
-
-//     if (!email) {
-//       return res.status(401).json({ message: 'No email found in session' });
-//     }
-
-//     const user = await User.findOne({ email });
-//     if (!user) {
-//       return res.status(400).json({ message: "Register first" });
-//     }
-
-//     user.isVerified = true;
-//     await user.save();
-//     return res.status(200).json({ message: "User verified successfully" });
-//   } catch (error) {
-//     console.error("Error in verifyemail:", error);
-//     return res.status(500).json({ message: "Server error", error });
-//   }
-// };
 export const verifyemail = async (req, res) => {
 
   const { email, otp } = req.body;
-  console.log('Email verification is');
+  console.log('Email verification is happining');
 
   try {
     // Find the verification token for the provided email
@@ -117,7 +134,7 @@ export const verifyemail = async (req, res) => {
     }
 
     // Check if the provided OTP matches the stored token
-    if (parseInt(otp) !== verificationToken.token) {
+    if (otp !== verificationToken.token) {
       return res.status(400).json({ message: "Invalid OTP." });
     }
 
@@ -140,7 +157,31 @@ export const verifyemail = async (req, res) => {
   }
 };
 
+export const tokencontroller = async (req, res) => {
+  const { refereshToken } = res.cookies;
 
+  try {
+    if (!refereshToken) {
+      return res.status(400).json({ message: "Verification erro" });
+    }
+    jwt.verify(refereshToken, process.env.JET_SECERET, (err,user) => {
+      if (err) {
+        res.status(403).json({ message: "Verification failed" })
+        const accesstoken = setToken(user);
+        res.cookie(process.env.ACCESS_TOKEN, accesstoken, {
+      httpOnly: true,
+      secure: true,
+    
+    });
+    // Set token and respond
+    
+    return res.status(200).json({ message: "token refereshed successfully" });
+      }
+    })
+  } catch (error) {
+    return res.status(500).json({message:"Erro in refresh token making"})
+  }
+}
 export const getProfile = async (req, res) => {
   try {
     const user = await User.findById(req.userId).select('-password'); 

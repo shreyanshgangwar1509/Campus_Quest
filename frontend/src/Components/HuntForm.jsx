@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 const api = axios.create({
   baseURL: "http://localhost:3000", // Set the base URL here
 });
@@ -12,7 +12,7 @@ function HuntForm() {
     const [difficulty, setDifficulty] = useState('');
     const [questionsCount, setQuestionsCount] = useState(1);
     const [questions, setQuestions] = useState([{ question: '', answer: '' , Hint:'' }]);
-
+    const navigate = useNavigate();
     const handleQuestionsCountChange = (e) => {
         const count = parseInt(e.target.value, 10);
         setQuestionsCount(count);
@@ -27,15 +27,29 @@ function HuntForm() {
 
     const handleSubmit = async(e) => {
         e.preventDefault();
-        const huntData = { title, host, description, difficulty, questionsCount, questions };
         
+       const questionsArray = questions?.map(q => q.question) || [];
+    const answersArray = questions?.map(q => q.answer) || [];
+    const hintsArray = questions?.map(q => q.Hint) || [];
+
+    const huntData = {
+        title,
+        host,
+        description,
+        difficulty,
+        questions: questionsArray,
+        answers: answersArray,
+        hints: hintsArray,
+    };
+
         try {
-            const response = await api.post('/api/hunts/createhunt', { huntData });
+            const response = await api.post('/api/hunts/createhunt', huntData);
             
-            console.log(huntData); // For now, just log the data
-            Navigate('/allhunts');
+            console.log(response.data); // For now, just log the data
+            navigate('/allhunts');
             alert("Hunt created successfully!");
         } catch (error) {
+            console.log("erro in making hunt",error);
             
         }
     };
@@ -127,6 +141,7 @@ function HuntForm() {
 
                 <button
                     type="submit"
+                    
                     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full"
                 >
                     Create Hunt

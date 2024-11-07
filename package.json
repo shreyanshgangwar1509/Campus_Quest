@@ -1,8 +1,0 @@
-{
-  "dependencies": {
-    "and": "^0.0.3",
-    "chart.js": "^4.4.6",
-    "next-auth": "^4.24.10",
-    "react-chartjs-2": "^5.2.0"
-  }
-}

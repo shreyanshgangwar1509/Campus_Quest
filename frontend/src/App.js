@@ -4,7 +4,6 @@ import Dashboard from './Components/Dashboard';
 import Navbar from './Components/Navbar';
 import LoginPage from './Pages/Auth/Login';
 import RegisterPage from './Pages/Auth/Register';
-import VerifyOtp from './Pages/Auth/Verify-Email';
 import CreateHunt from './Pages/CreateHunt';
 import Home from './Pages/Home/Home';
 import Allhunts from './Components/Allhunts';
@@ -30,10 +29,9 @@ function App() {
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/Dashboard" element={<Dashboard />} />
             <Route path="/createhunt" element={<CreateHunt />} />
-           <Route path='/verifyemail' element={<VerifyOtp />} />
+            <Route path='/verifyemail' element={<VerifyOtp />} />
             <Route path='/allhunts' element={<Allhunts/>}/>
-        <Route path='/currenthunt' element={<CurrentHunt  />}/>
-
+            <Route path='/currenthunt' element={<CurrentHunt  />}/>
             </Routes>
     </Router>
     

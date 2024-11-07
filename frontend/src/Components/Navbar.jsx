@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Navbar = () => {
+  const cookie = document.cookie;
+  
   return (
     <nav className="flex items-center justify-between p-4 bg-blue-500 text-white">
       <h1 className="text-xl font-bold">She_knows</h1>
