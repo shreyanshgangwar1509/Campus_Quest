@@ -1,6 +1,7 @@
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import './App.css';
 import Dashboard from './Components/Dashboard';
+import Map from './Components/Map';
 import Navbar from './Components/Navbar';
 import Allhunts from './Pages/Allhunts';
 import LoginPage from './Pages/Auth/Login';
@@ -27,6 +28,7 @@ function App() {
             <Route path="/allhunts" element={<Allhunts />} />
             <Route path="/Dashboard" element={<Dashboard />} />
             <Route path="/createhunt" element={<CreateHunt />} />
+            <Route path="/map" element={<Map/>} />
             
             </Routes>
     </Router>
