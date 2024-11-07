@@ -22,7 +22,7 @@ export const getMessage = async (req, res) => {
     }
 };
 
-// Send a message and add it to the chat
+
 export const postMessage = async (req, res, io) => {  // io passed here for socket
     try {
         const { message } = req.body;
