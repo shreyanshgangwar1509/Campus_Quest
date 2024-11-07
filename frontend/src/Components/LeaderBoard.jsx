@@ -1,21 +1,46 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-const Leaderboard = ({ huntId }) => {
-    const [leaderboard, setLeaderboard] = useState([]);
+const Leaderboard = () => {//{ huntId } was there 
+    // Sample leaderboard data
+    const [leaderboard, setLeaderboard] = useState([
+        {
+            user: { _id: '1', username: 'JohnDoe' },
+            team: { name: 'Team A' },
+            score: 85,
+            time: 120
+        },
+        {
+            user: { _id: '2', username: 'JaneSmith' },
+            team: { name: 'Team B' },
+            score: 90,
+            time: 115
+        },
+        {
+            user: { _id: '3', username: 'AliceBrown' },
+            team: { name: 'Team C' },
+            score: 75,
+            time: 130
+        },
+        {
+            user: { _id: '4', username: 'BobJones' },
+            team: { name: 'Team A' },
+            score: 80,
+            time: 125
+        }
+    ]);
 
-    useEffect(() => {
-        const fetchLeaderboard = async () => {
-            try {
-                const response = await axios.get(`/api/hunts/${huntId}/leaderboard`);
-                setLeaderboard(response.data);
-            } catch (error) {
-                console.error('Error fetching leaderboard:', error);
-            }
-        };
+    // useEffect(() => {
+    //     const fetchLeaderboard = async () => {
+    //         try {
+    //             const response = await axios.get(`/api/hunts/${huntId}/leaderboard`);
+    //             setLeaderboard(response.data);
+    //         } catch (error) {
+    //             console.error('Error fetching leaderboard:', error);
+    //         }
+    //     };
 
-        fetchLeaderboard();
-    }, [huntId]);
+    //     fetchLeaderboard();
+    // }, [huntId]);
 
     return (
         <div className="mt-6 p-4 bg-white rounded shadow-md">

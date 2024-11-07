@@ -124,12 +124,25 @@ const Allhunts = () => {
             {hunts.map((hunt, index) => (
                 <div class="flex flex-col h-full">
                     <HuntCard key={index} {...hunt} />
-                    <a  class="px-5 py-2.5 font-medium text-center bg-zinc-300 mt-1 hover:bg-blue-100 hover:text-blue-600 text-blue-500 rounded-lg text-sm">
-                        <button onClick={() => {
-                            
-                            Navigate(`/currenthunt` , {state:{hunt}});
-                        }}>Join Hunt </button>
-                    </a>
+                    
+                    <div className='flex justify-center gap-3'>
+                        <a  class="px-5 py-2.5 font-medium text-center bg-zinc-300 mt-1 hover:bg-blue-100 hover:text-blue-600 text-blue-500 rounded-lg text-sm">
+                            <button onClick={() => {
+                                
+                                Navigate(`/currenthunt` , {state:{hunt}});
+                            }}>Join Hunt </button>
+                        </a>
+                        <a  class="px-5 py-2.5 font-medium text-center bg-zinc-300 mt-1 hover:bg-blue-100 hover:text-blue-600 text-blue-500 rounded-lg text-sm">
+                            <button onClick={() => {
+                                
+                                Navigate(`/leaderboard` , {state:{hunt}});
+                            }}>Leaderboard </button>
+                        </a>
+                    
+                    
+                    </div>
+
+                    
                 </div>
 
                 
