@@ -18,7 +18,7 @@ const currenthunt = new mongoose.Schema({
         type: Date,
         default:Date.now
     }
-
+    
 }, { timestamps: true })
 const CurrentHunt = mongoose.model("CurrentHunt", currenthunt);
 export default CurrentHunt ;

@@ -14,16 +14,20 @@ const leaderboardEntrySchema = new mongoose.Schema({
 });
 
 const huntSchema = new mongoose.Schema({
-    title: String,
-    host: String,
+    title: { type: String, required: true },
+    host: { type: String, required: true },
     leaderboard: [leaderboardEntrySchema],
-    description: String,
-    Questions: [String],
-    Answers: [String],
-    Hint1: [String],
-    difficulty: ["easy", "medium", "hard"],
-    solved:Number
-})
-const Hunt = mongoose.model("Hunt", huntSchema)
-export default Hunt ;
+    description: { type: String, required: true },
+    questions: [{ type: String, required: true }],
+    answers: [{ type: String, required: true }],
+    hints: [{ type: String, required: true }],
+    difficulty: { 
+        type: String, 
+        enum: ["easy", "medium", "hard"], 
+        required: true 
+    },
+    solved: { type: Number, default: 0 }
+});
 
+const Hunt = mongoose.model("Hunt", huntSchema);
+export default Hunt;

@@ -4,6 +4,8 @@ import presetHunts from '../utills/PreSetHunts.js';
 
 // Create a new hunt
 export const createHunt = async (req, res) => {
+    console.log('making hunt');
+    
     const { title, host, description, questions, answers, hints, difficulty } = req.body;
     try {
         const newHunt = new Hunt({
@@ -82,6 +84,7 @@ export const presethunt =  async (req, res) => {
         res.status(500).json({ message: 'Error adding pre-set hunts.', error });
     }
 };
+
 // router.post('/hunts/:id/leaderboard', async (req, res) => {
 //     const { userId, teamId, score, time } = req.body;
 //     try {

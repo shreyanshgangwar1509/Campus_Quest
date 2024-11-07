@@ -13,16 +13,16 @@ const HuntPage = ({ hunt }) => {
     };
     const [isHuntActive, setHuntActive] = useState(false);
     const [score, setScore] = useState(0);
-    const [remainingTime, setRemainingTime] = useState(60 * 60); // Example: 1 hour in seconds
+    const [remainingTime, setRemainingTime] = useState(60 * 60*2); // Example: 1 hour in seconds
     const [usedHints, setUsedHints] = useState(0);
-    //const [hints, setHints] = useState(hunt.hints); // Assuming hunt object has hints
+    const [hints, setHints] = useState( ''); // Assuming hunt object has hints
     const [visibleHints, setVisibleHints] = useState([]); // To track which hints have been shown
-
+    
     useEffect(() => {
         let timer;
         if (isHuntActive) {
             timer = setInterval(() => {
-                setRemainingTime((prevTime) => prevTime - 1); // Decrement time every second
+                setRemainingTime((prevTime) => prevTime +1); // Decrement time every second
             }, 1000);
         }
         return () => clearInterval(timer);
@@ -42,12 +42,12 @@ const HuntPage = ({ hunt }) => {
     };
 
     const handleUseHint = () => {
-        // if (usedHints < hints.length) {
-        //     setVisibleHints((prev) => [...prev, hints[usedHints]]); // Show the next hint
-        //     setScore((prev) => prev - 10); // Deduct points for using a hint
-        //     setRemainingTime((prev) => prev + 600); // Add 10 minutes in seconds
-        //     setUsedHints((prev) => prev + 1); // Increment used hints
-        // }
+        if (usedHints < hints.length) {
+            setVisibleHints((prev) => [...prev, hints[usedHints]]); // Show the next hint
+            setScore((prev) => prev - 10); // Deduct points for using a hint
+            setRemainingTime((prev) => prev + 600); // Add 10 minutes in seconds
+            setUsedHints((prev) => prev + 1); // Increment used hints
+        }
     };
 
     return (
