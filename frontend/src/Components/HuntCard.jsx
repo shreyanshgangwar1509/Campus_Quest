@@ -12,11 +12,7 @@ const HuntCard = ({ title, host, description, difficulty, questionsCount, solved
                 <p className="text-gray-600 text-sm">Difficulty: <span className={`font-semibold ${difficulty === "easy" ? "text-green-500" : difficulty === "medium" ? "text-yellow-500" : "text-red-500"}`}>{difficulty}</span></p>
                 <p className="text-gray-600 text-sm">Questions: {questionsCount} | Solved: {solved}</p>
             </div>
-            <div className="px-6 pt-4 pb-2">
-                <button className="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    Join Hunt
-                </button>
-            </div>
+            
         </div>
     );
 };
