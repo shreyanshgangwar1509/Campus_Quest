@@ -1,12 +1,12 @@
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import './App.css';
+import Allhunts from './Components/Allhunts';
+import CurrentHunt from './Components/CurrentHunt';
 import Dashboard from './Components/Dashboard';
 import Map from './Components/Map';
 import Navbar from './Components/Navbar';
-import Allhunts from './Pages/Allhunts';
 import LoginPage from './Pages/Auth/Login';
 import RegisterPage from './Pages/Auth/Register';
-import CreateHunt from './Pages/CreateHunt';
 import Home from './Pages/Home/Home';
 
 
@@ -25,11 +25,12 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
-            <Route path="/allhunts" element={<Allhunts />} />
             <Route path="/Dashboard" element={<Dashboard />} />
-            <Route path="/createhunt" element={<CreateHunt />} />
+            
             <Route path="/map" element={<Map/>} />
             
+            <Route path='/allhunts' element={<Allhunts/>}/>
+            <Route path='/currenthunt' element={<CurrentHunt  />}/>
             </Routes>
     </Router>
     
