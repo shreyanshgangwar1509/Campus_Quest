@@ -14,10 +14,7 @@ const messageSchema = new Schema({
     message:{
         type:String,
     }
-},
-  {
-    timestamps:true
-  }
+},{timestamps:true}
 );
 
 const Message = model("Message", messageSchema);

@@ -1,3 +1,4 @@
 1.untold stories and facts ka section bhi bnayenge
 2.storiy schema and it has likes and comments
 3.cmments schema me time stamp and comment
+4. we can see location of another teams during hunt
