@@ -12,6 +12,8 @@ import RegisterPage from './Pages/Auth/Register';
 import Home from './Pages/Home/Home';
 import Events from './Pages/Event';
 import CreateHunt from './Pages/CreateHunt';
+import PhotoChallenge from './Pages/PhotoChallenge';
+
 
 
 import Leaderboard from './Components/LeaderBoard';
@@ -41,6 +43,8 @@ function App() {
         <Route path='/events' element={<Events />} />
         <Route path='/createhunt' element={<CreateHunt />} />
         <Route path='/leaderboard' element={<Leaderboard />} />
+        <Route path='/a' element={<PhotoChallenge />} />
+
 
         
         
