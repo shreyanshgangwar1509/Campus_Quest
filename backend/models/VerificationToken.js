@@ -16,6 +16,7 @@ const VerificationTokenSchema = new mongoose.Schema({
     expires: 10000,
   },
 });
+
 const VerificationToken = mongoose.model(
   "VerificationToken",
   VerificationTokenSchema

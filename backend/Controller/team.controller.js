@@ -9,13 +9,17 @@
 // router.post("/rejectInvite", rejectInvite); //testing done
 // router.get("/participatingTeamsOfAUser/:userId", getParticipatingTeamsOfAUser); //testing done
 
-import Team from "../models/Team.model";
-import User from "../models/User.model";
+
+import Team from "../models/Team.model.js";
+import User from "../models/User.model.js";
 
 // router.post("/kickAMember", kickMember);
 const createTeam = async (req, res, next) => {
   const { teamName, userid } = req.body;
-
+  
+  
+  console.log(req.body);
+  
   if (!teamName) {
     return res.status(400).json({
       success: false,
@@ -49,7 +53,7 @@ const createTeam = async (req, res, next) => {
         team: existteam,
       });
         }
-       const newTeam = await Team.create({ teamName, userid, size });
+       const newTeam = await Team.create({ teamName, userid, size:1 });
     newTeam.acceptedMembers = [...newTeam.acceptedMembers, userid];
     user.participatingTeam = [...user.participatingTeam, newTeam._id];
     await user.save();
@@ -944,6 +948,7 @@ const getParticipatingTeamsOfAUser = async (req, res, next) => {
 };
 
 export {
-    acceptInvite, createTeam, deleteTeam, getAllTeamInvitesForAUser,
-    getMembersOfATeam, getParticipatingTeamsOfAUser, kickMember, leaveTeam, rejectInvite, sendTeamInvite, updateResume, updateTeam, userProfile
+  acceptInvite, createTeam, deleteTeam, getAllTeamInvitesForAUser,
+  getMembersOfATeam, getParticipatingTeamsOfAUser, kickMember, leaveTeam, rejectInvite, sendTeamInvite, updateResume, updateTeam, userProfile
 };
+

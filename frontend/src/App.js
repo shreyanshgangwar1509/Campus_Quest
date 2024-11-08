@@ -8,6 +8,7 @@ import Navbar from './Components/Navbar';
 import LoginPage from './Pages/Auth/Login';
 import RegisterPage from './Pages/Auth/Register';
 import Home from './Pages/Home/Home';
+import TeamFrontPage from './Pages/TeamFrontPage';
 
 
 
@@ -21,14 +22,14 @@ function App() {
       </div> */}
       <Navbar />
       {/* <Dashboard/> */}
+      
       <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/Dashboard" element={<Dashboard />} />
-            
             <Route path="/map" element={<Map/>} />
-            
+            <Route path='/teampage' element={<TeamFrontPage/>}/>
             <Route path='/allhunts' element={<Allhunts/>}/>
             <Route path='/currenthunt' element={<CurrentHunt  />}/>
             </Routes>

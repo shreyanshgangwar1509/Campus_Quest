@@ -1,5 +1,7 @@
 import express from "express";
+import { acceptInvite, createTeam, deleteTeam, getAllTeamInvitesForAUser, getMembersOfATeam, getParticipatingTeamsOfAUser, kickMember, leaveTeam, rejectInvite, sendTeamInvite, updateTeam } from "../Controller/team.controller.js";
 const router = express.Router();
+console.log('Team routes called');
 
 router.post("/createTeam", createTeam); //testing done
 router.patch("/update/:teamId", updateTeam); //testing done

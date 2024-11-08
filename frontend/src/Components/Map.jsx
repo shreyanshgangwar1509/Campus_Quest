@@ -10,7 +10,7 @@ const Map = () => {
     // Only initialize the map if it hasn't been initialized already
     if (!mapRef.current) {
       // Initialize the map container
-      mapRef.current = L.map(mapContainerRef.current).setView([51.505, -0.09], 13);
+      mapRef.current = L.map(mapContainerRef.current).setView([25.492394,81.864742], 17);
 
       // Add tile layer
       L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -73,7 +73,7 @@ const Map = () => {
       <div
         ref={mapContainerRef}
         id="map"
-        style={{ height: "500px" }} // Make sure to specify height for the map
+        style={{ height: "1000px" }} // Make sure to specify height for the map
       ></div>
     </div>
   );
