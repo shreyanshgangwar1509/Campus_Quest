@@ -11,6 +11,9 @@ const Navbar = () => {
         <Link to="/allhunts" className="px-4 py-2 bg-blue-700 rounded hover:bg-blue-600">
           All Hunts
         </Link>
+        <Link to="/events" className="px-4 py-2 bg-blue-700 rounded hover:bg-blue-600">
+          Events
+        </Link>
         <Link to="/dashboard" className="px-4 py-2 bg-blue-700 rounded hover:bg-blue-600">
           Dashboard
         </Link>
@@ -24,6 +27,7 @@ const Navbar = () => {
         <Link to="/register" className="px-4 py-2 bg-green-700 rounded hover:bg-green-600">
           Register
         </Link>
+        
       </div>
     </nav>
   );
