@@ -13,7 +13,7 @@ const Navbar = () => {
   const logout = async () => {
     try {
       
-      const response = await api.post('/api/auth/logout', {}, {
+      await api.post('/api/auth/logout', {}, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -48,16 +48,16 @@ const Navbar = () => {
         <Link to="/dashboard" className="px-4 py-1 bg-green-500 rounded hover:bg-blue-600">
           Dashboard
         </Link>
-        <Link to="/createhunt" className="px-4 py-2 bg-blue-700 rounded hover:bg-blue-600">
+        <Link to="/createhunt" className="px-4 py-1 bg-green-500 rounded hover:bg-blue-600">
           Create Hunt
         </Link>
 
         {!token ? (
-          <Link to="/login" className="px-4 py-2 bg-blue-700 rounded hover:bg-blue-600">
+          <Link to="/login" className="px-4 py-1 bg-green-700 rounded hover:bg-blue-600">
             Login
           </Link>
         ) : (
-          <button onClick={logout} className="px-4 py-2 bg-red-700 rounded hover:bg-red-400">
+          <button onClick={logout} className="px-4 py-1 bg-red-700 rounded hover:bg-red-400">
             Logout
           </button>
         )}

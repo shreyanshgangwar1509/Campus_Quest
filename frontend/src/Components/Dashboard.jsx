@@ -1,15 +1,12 @@
 
 import { Link } from "react-router-dom"; // Import Link and useHistory
-import { useState } from "react";
 
 import HuntCard from "./HuntCard";
 // import HuntCard from './Components/HuntCard';
 
 
 export default function Dashboard() {
-  const signOut = () => {
-    console.log('signput function ')
-  }
+  
   // data/presetHunts.js
   const presetHunts = [
     {
@@ -78,18 +75,18 @@ export default function Dashboard() {
 
 
 
-  const [data, setData] = useState({
-    labels: ["January", "February", "March", "April", "May", "June"],
-    datasets: [
-      {
-        label: "Sales",
-        data: [65, 59, 80, 81, 56, 55],
-        backgroundColor: "rgba(75, 192, 192, 0.6)",
-        borderColor: "rgba(75, 192, 192, 1)",
-        borderWidth: 1,
-      },
-    ],
-  });
+  // const [data, setData] = useState({
+  //   labels: ["January", "February", "March", "April", "May", "June"],
+  //   datasets: [
+  //     {
+  //       label: "Sales",
+  //       data: [65, 59, 80, 81, 56, 55],
+  //       backgroundColor: "rgba(75, 192, 192, 0.6)",
+  //       borderColor: "rgba(75, 192, 192, 1)",
+  //       borderWidth: 1,
+  //     },
+  //   ],
+  // });
 
   return (
     <div className="flex min-h-screen bg-gray-100">
@@ -109,12 +106,7 @@ export default function Dashboard() {
                 Settings
               </Link>
             </li>
-            <li>
-              <button onClick={() => signOut()} className="flex items-center w-full text-left py-2 px-4 hover:bg-blue-700 transition-all">
-                <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12h-6m0 0h6m-6 0V6m0 6l-6 6m6-6l6 6" /></svg>
-                Sign Out
-              </button>
-            </li>
+            
           </ul>
         </nav>
       </aside>
