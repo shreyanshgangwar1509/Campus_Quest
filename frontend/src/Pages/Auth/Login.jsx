@@ -12,16 +12,16 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-
+  // const [isLogged ,setIslogged] = useState(false)
   const handleSubmit = async (e) => {
     e.preventDefault();
 
 
     try {
       const response = await api.post("/api/auth/login", { email, password });
-      
+      localStorage.setItem('token',response.data.accesstoken)
       // Assuming the backend sends a JWT token on successful login
-      navigate('/');
+      navigate('/profile');
     } catch (error) {
       setErrorMessage("Invalid email or password. Please try again.");
     }

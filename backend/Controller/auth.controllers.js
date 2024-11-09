@@ -89,7 +89,7 @@ export const Login = async (req, res) => {
     }
     const accesstoken = setToken(user);
     res.cookie(process.env.ACCESS_TOKEN, accesstoken, { httpOnly: true, secure: true });
-    const refereshToken = jwt.sign({ user }, process.env.JET_SECERET || '', { expiresIn: "1d" })
+    const refereshToken = jwt.sign({ user }, process.env.JWT_SECERET || '', { expiresIn: "1d" })
     res.cookie(process.env.REFERESH_TOKEN, refereshToken, {
       httpOnly: true,
       secure: true,
@@ -97,7 +97,7 @@ export const Login = async (req, res) => {
     });
     // Set token and respond
     
-    return res.status(200).json({ message: "User logged in successfully" });
+    return res.status(200).json({ message: "User logged in successfully",accesstoken });
   } catch (error) {
     console.error("Error in Login function:", error);
     return res.status(500).json({ message: 'Server error', error });
@@ -106,12 +106,15 @@ export const Login = async (req, res) => {
 
 export const logoutUser = async (req, res) => {
   try {
+    console.log('logout 1 function is called ');
     // Clear the cookie; ensure to match the options used when setting the cookie
     res.clearCookie('accesstoken', {
-      httpOnly: true, // if set when creating the cookie
-      secure: process.env.NODE_ENV === 'production', // if set when creating the cookie
-      sameSite: 'Strict', // or 'Lax' depending on your implementation
+      httpOnly: true, 
+      secure: process.env.NODE_ENV === 'production', 
+      sameSite: 'Strict', 
     });
+    console.log('logout function is called ');
+    
     res.status(200).json({ message: 'Logged out successfully' });
   } catch (error) {
     res.status(500).json({ error: 'Server error', error });
@@ -184,10 +187,11 @@ export const tokencontroller = async (req, res) => {
 }
 export const getProfile = async (req, res) => {
   try {
-    const user = await User.findById(req.userId).select('-password'); 
+    const user = await User.findById(req.user.userId).select('-password'); 
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
+console.log('User profile has been send successfully');
 
     res.json({ user });
   } catch (error) {

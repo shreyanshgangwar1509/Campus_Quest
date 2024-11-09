@@ -7,11 +7,11 @@ const router = express.Router();
 
 router.post('/register', Register);
 
-router.post('/login', Login);
+router.post('/login',Login);
 
-router.post('/verifyemail', verifyemail);
-// router.post('/forgetpassword', forgetpassword);
-router.post('/logout', logoutUser);
+router.post('/verifyemail',verifyemail);
+
+router.post('/logout', authMiddleware,logoutUser);
 // Protected route
 router.get('/profile', authMiddleware, getProfile); // Protect this route with authMiddleware
 router.get('/generate-token', tokencontroller);

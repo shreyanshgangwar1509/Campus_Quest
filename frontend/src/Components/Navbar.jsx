@@ -1,9 +1,40 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+
+const api = axios.create({
+  baseURL: 'http://localhost:3000',
+});
 
 const Navbar = () => {
-  const cookie = document.cookie;
-  
+  const [token, setToken] = useState(localStorage.getItem('token'));
+  const navigate = useNavigate();
+
+  const logout = async () => {
+    try {
+      
+      const response = await api.post('/api/auth/logout', {}, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      localStorage.removeItem('token');
+      setToken(null);
+      navigate('/');
+    } catch (error) {
+      console.log("Error in logout", error);
+    }
+  };
+  useEffect(() => {
+    const tokenFromStorage = localStorage.getItem('token');
+    if (tokenFromStorage) {
+      setToken(tokenFromStorage);
+    } else {
+      setToken(null);
+    }
+  }, [token,navigate]);
+
   return (
     <nav className="flex items-center justify-between p-4 bg-blue-500 text-white">
       <h1 className="text-xl font-bold">She_knows</h1>
@@ -20,14 +51,16 @@ const Navbar = () => {
         <Link to="/createhunt" className="px-4 py-2 bg-blue-700 rounded hover:bg-blue-600">
           Create Hunt
         </Link>
-        
-        <Link to="/login" className="px-4 py-2 bg-blue-700 rounded hover:bg-blue-600">
-          Login
-        </Link>
-        <Link to="/register" className="px-4 py-2 bg-green-700 rounded hover:bg-green-600">
-          Register
-        </Link>
-        
+
+        {!token ? (
+          <Link to="/login" className="px-4 py-2 bg-blue-700 rounded hover:bg-blue-600">
+            Login
+          </Link>
+        ) : (
+          <button onClick={logout} className="px-4 py-2 bg-red-700 rounded hover:bg-red-400">
+            Logout
+          </button>
+        )}
       </div>
     </nav>
   );

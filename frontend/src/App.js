@@ -18,6 +18,7 @@ import Events from './Pages/Event';
 
 
 import Leaderboard from './Components/LeaderBoard';
+import Profile from './Pages/Profile';
 
 
 
@@ -45,10 +46,7 @@ function App() {
         <Route path='/events' element={<Events />} />
         <Route path='/createhunt' element={<CreateHunt />} />
         <Route path='/leaderboard' element={<Leaderboard />} />
-
-        
-        
-
+        <Route path='/profile' element={<Profile/>}/>
             </Routes>
     </Router>
     

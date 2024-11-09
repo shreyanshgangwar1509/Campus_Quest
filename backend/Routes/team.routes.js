@@ -1,18 +1,12 @@
 import express from "express";
-import { acceptInvite, createTeam, deleteTeam, getAllTeamInvitesForAUser, getMembersOfATeam, getParticipatingTeamsOfAUser, kickMember, leaveTeam, rejectInvite, sendTeamInvite, updateTeam } from "../Controller/team.controller.js";
+import { createTeam, deleteTeam, jointeam, leaveTeam, teammember } from "../Controller/team.controller.js";
+import authMiddleware from "../middleware/auth.middleware.js";
 const router = express.Router();
 console.log('Team routes called');
 
-router.post("/createTeam", createTeam); //testing done
-router.patch("/update/:teamId", updateTeam); //testing done
-router.delete("/delete/:teamId/:userId", deleteTeam); // testing done
-router.post("/sendTeamInvite", sendTeamInvite); //testing done
-router.get("/getAllInvites/:userId", getAllTeamInvitesForAUser); //testing done
-router.get("/getMembersOfATeam/:teamId", getMembersOfATeam); //testing done
-router.post("/leaveTeam", leaveTeam);
-router.post("/acceptInvite", acceptInvite); //testing done
-router.post("/rejectInvite", rejectInvite); //testing done
-router.get("/participatingTeamsOfAUser/:userId", getParticipatingTeamsOfAUser); //testing done
-router.post("/kickAMember", kickMember);
-
+router.post("/createTeam", authMiddleware,createTeam); 
+router.delete("/delete/:teamId/:userId",authMiddleware, deleteTeam); 
+router.post("/leaveTeam", authMiddleware,leaveTeam);
+router.post("/jointeam/:teamId",authMiddleware,jointeam)
+router.get('/allteamMember/:teamId', authMiddleware,teammember);
 export default router;

@@ -11,9 +11,10 @@ const eventSchema = new mongoose.Schema({
     attendees: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
     hunts: [
         {
-            type:mongoose.Schema.Types.ObjectId,ref:"HUnt",
+            type:mongoose.Schema.Types.ObjectId,ref:"Hunt",
         }
     ],
+
     category: { type: String, enum: ['Workshop', 'Seminar', 'Sports', 'Cultural', 'Other'], required: true },
 });
 

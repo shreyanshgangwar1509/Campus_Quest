@@ -69,8 +69,6 @@ export const postMessage = async (req, res, io) => {  // io passed here for sock
 export const getActiveUsers = async (req, res) => {
     try {
         const loggedInUserId = req.user.userId;
-
-        // Fetch all users except the logged-in user
         const filteredUsers = await User.find({ _id: { $ne: loggedInUserId } }).select("-password");
         res.status(200).json(filteredUsers);
     } catch (error) {
