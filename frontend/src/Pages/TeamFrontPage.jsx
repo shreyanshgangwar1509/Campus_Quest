@@ -9,8 +9,6 @@ const TeamFrontPage = () => {
   const [leaderId, setLeaderId] = useState('');
   const [teamId, setTeamId] = useState('');
   const [userId, setUserId] = useState('');
-  const [invites, setInvites] = useState([]);
-  const [participatingTeams, setParticipatingTeams] = useState([]);
 
   // Handler functions for each route
   const createTeam = async () => {
@@ -27,15 +25,6 @@ const TeamFrontPage = () => {
     } catch (error) {
       console.error(error);
       alert('Error creating team');
-    }
-  };
-  const updateTeam = async () => {
-    try {
-      await api.patch(`/api/team/update/${teamId}, { teamName }`);
-      alert('Team updated successfully');
-    } catch (error) {
-      console.error(error);
-      alert('Error updating team');
     }
   };
 

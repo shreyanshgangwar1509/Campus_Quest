@@ -5,24 +5,18 @@ import Allhunts from './Components/Allhunts';
 import CurrentHunt from './Components/CurrentHunt';
 
 import Dashboard from './Components/Dashboard';
+import EventForm from './Components/EventForm';
+import Leaderboard from './Components/LeaderBoard';
 import Map from './Components/Map';
 import Navbar from './Components/Navbar';
+import PhotoChallengeForm from './Components/PhotoChallengeForm';
 import LoginPage from './Pages/Auth/Login';
 import RegisterPage from './Pages/Auth/Register';
-import Home from './Pages/Home/Home';
-
-import TeamFrontPage from './Pages/TeamFrontPage';
-
 import CreateHunt from './Pages/CreateHunt';
-import Events from './Pages/Event';
-
-
-import Leaderboard from './Components/LeaderBoard';
+import EventPage from './Pages/Event';
+import Home from './Pages/Home/Home';
 import Profile from './Pages/Profile';
-
-
-
-
+import TeamFrontPage from './Pages/TeamFrontPage';
 
 function App() {
   return (
@@ -43,10 +37,12 @@ function App() {
             <Route path='/teampage' element={<TeamFrontPage/>}/>
             <Route path='/allhunts' element={<Allhunts/>}/>
           <Route path='/currenthunt' element={<CurrentHunt />} />
-        <Route path='/events' element={<Events />} />
+        <Route path='/events' element={<EventPage />} />
         <Route path='/createhunt' element={<CreateHunt />} />
         <Route path='/leaderboard' element={<Leaderboard />} />
         <Route path='/profile' element={<Profile/>}/>
+        <Route path='/eventform' element={<EventForm />} />
+        <Route path='/photochallengeform' element={<PhotoChallengeForm />} />
             </Routes>
     </Router>
     

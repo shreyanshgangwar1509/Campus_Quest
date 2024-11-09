@@ -1,6 +1,7 @@
 // pages/events.js
 import React from 'react';
 import EventCard from '../Components/EventCard';
+import { Link } from 'react-router-dom';
 
 const events = [
   {
@@ -34,10 +35,21 @@ const events = [
 
 const EventPage = () => {
   return (
-    <div className="flex flex-wrap justify-center gap-4 p-4">
-      {events.map((event, index) => (
-        <EventCard key={index} event={event} />
-      ))}
+    <div className="relative">
+      
+      <Link to="/eventform"
+        
+        className="absolute  bg-gradient-to-r from-green-400  to-green-500 text-white font-semibold rounded-lg shadow-md transition-transform duration-300 hover:scale-105 hover:bg-gradient-to-r hover:from-green-500 hover:to-green-600 focus:outline-none focus:ring-2 focus:ring-green-400top-0 right-4 px-4 py-2 "
+      >
+        Add Event
+      </Link>
+
+      
+      <div className="flex flex-wrap justify-center gap-4 p-4 mt-8">
+        {events.map((event, index) => (
+          <EventCard key={index} event={event} />
+        ))}
+      </div>
     </div>
   );
 };
