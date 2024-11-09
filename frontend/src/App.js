@@ -14,10 +14,14 @@ import Home from './Pages/Home/Home';
 import TeamFrontPage from './Pages/TeamFrontPage';
 
 import CreateHunt from './Pages/CreateHunt';
-import Events from './Pages/Event';
+import EventPage from './Pages/Event';
 
 
 import Leaderboard from './Components/LeaderBoard';
+import EventForm from './Components/EventForm';
+import PhotoChallengeForm from './Components/PhotoChallengeForm';
+
+
 
 
 
@@ -42,9 +46,14 @@ function App() {
             <Route path='/teampage' element={<TeamFrontPage/>}/>
             <Route path='/allhunts' element={<Allhunts/>}/>
           <Route path='/currenthunt' element={<CurrentHunt />} />
-        <Route path='/events' element={<Events />} />
+        <Route path='/events' element={<EventPage />} />
         <Route path='/createhunt' element={<CreateHunt />} />
         <Route path='/leaderboard' element={<Leaderboard />} />
+        <Route path='/eventform' element={<EventForm />} />
+        <Route path='/photochallengeform' element={<PhotoChallengeForm />} />
+
+        
+
 
         
         

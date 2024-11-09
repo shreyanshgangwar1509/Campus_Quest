@@ -1,6 +1,9 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import HuntCard from './HuntCard';
+
+import PhotoChallengeCard from './PhotoChallengeCard';
+
 
 
 const Allhunts = () => {
@@ -114,13 +117,77 @@ const Allhunts = () => {
     }
     ];
 
+    const challenges = [
+    {
+      _id: '1',
+      title: 'Sunset Photography',
+      description: 'Capture the best sunset moment in your city.',
+      startDate: '2024-11-10T00:00:00Z',
+      endDate: '2024-11-20T23:59:59Z',
+    },
+    {
+      _id: '2',
+      title: 'Wildlife Wonders',
+      description: 'Photograph any wildlife species in its natural habitat.',
+      startDate: '2024-12-01T00:00:00Z',
+      endDate: '2024-12-10T23:59:59Z',
+    },
+    {
+      _id: '3',
+      title: 'Urban Exploration',
+      description: 'Explore your city’s streets and capture interesting urban shots.',
+      startDate: '2024-12-15T00:00:00Z',
+      endDate: '2024-12-25T23:59:59Z',
+    },
+  ];
+
+
     const Navigate = useNavigate();
 
     
-    
 
-    return (
-        <div className="flex flex-wrap justify-center p-6 gap-3">
+  const [showPhotoChallenge, setShowPhotoChallenge] = useState(true); // Toggle between Photo Challenge and Hunt
+
+  return (
+    <div className="min-h-screen bg-gray-100 bg-[url('https://images.unsplash.com/photo-1612257998531-70e0d0a15f6d?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fHRyZWFzdXJlJTIwaHVudHxlbnwwfHwwfHx8MA%3D%3D')] bg-cover bg-center h-screen">
+      <nav className="bg-blue-600 p-1">
+        <div className="max-w-7xl mx-auto flex justify-between items-center">
+          {/* Left buttons */}
+          <div className="flex space-x-4">
+            <button
+              onClick={() => setShowPhotoChallenge(true)}
+              className="text-white font-semibold py-2 px-4 rounded-md hover:bg-blue-500"
+            >
+              Photo Challenge
+            </button>
+            <button
+              onClick={() => setShowPhotoChallenge(false)}
+              className="text-white font-semibold py-2 px-4 rounded-md hover:bg-blue-500"
+            >
+              Hunt Challenge
+            </button>
+          </div>
+          {/* Right buttons */}
+          <div className="flex space-x-4">
+            <Link to="/photochallengeform" className="text-white font-semibold py-1 px-4 rounded-md bg-yellow-500">
+              Create Photo Challenge
+            </Link>
+            <Link to="/createhunt" className="text-white font-semibold py-1 px-4 rounded-md bg-yellow-500 ">
+              Create Hunt
+            </Link>
+          </div>
+        </div>
+      </nav>
+      <div className="max-w-7xl mx-auto p-6">
+        {showPhotoChallenge ? (
+                <div className="flex flex-wrap justify-center">
+                    {challenges.map((challenge) => (
+                        <PhotoChallengeCard key={challenge._id} challenge={challenge} />
+                    ))}
+                </div>
+        ) : (
+        <div className="space-y-4 flex gap-2 line">
+                          {/* showing the hunts */}
             {hunts.map((hunt, index) => (
                 <div class="flex flex-col h-full">
                     <HuntCard key={index} {...hunt} />
@@ -140,19 +207,22 @@ const Allhunts = () => {
                         </a>
                     
                     
-                    </div>
-
-                    
-                </div>
-
-                
-                
+                    </div> 
+                </div>  
             ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
 
-            
-            
-        </div>
-    );
-};
+
+
+    
+
+  
 
 export default Allhunts;
+
+

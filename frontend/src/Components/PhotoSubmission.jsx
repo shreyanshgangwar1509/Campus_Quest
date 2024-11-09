@@ -11,7 +11,7 @@ const PhotoSubmission = ({ challengeId }) => {
         formData.append('image', image);
 
         // Upload the image to a cloud storage (like AWS S3, Cloudinary, etc.) and get the URL
-        const imageUrl = await uploadImage(formData); // Assume this function is implemented
+        const imageUrl = "" // Assume this function is implemented
 
         // Submit the photo
         await axios.post(`/api/photoChallenges/${challengeId}/submit`, {

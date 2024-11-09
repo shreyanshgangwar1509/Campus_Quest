@@ -54,6 +54,7 @@ const Map = () => {
           alert("Please allow geolocation access");
         } else {
           alert("Can't get current location");
+          console.log(err);
         }
       };
 
