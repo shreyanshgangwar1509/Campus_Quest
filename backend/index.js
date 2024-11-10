@@ -8,6 +8,7 @@ import connectDB from './db/dbconnect.js';
 import authRoutes from './Routes/auth.routes.js';
 import chatRoutes from './Routes/chat.routes.js';
 import huntRoutes from './Routes/hunt.routes.js';
+import photoroutes from './Routes/photoChallenge.routes.js';
 import teamroutes from './Routes/team.routes.js';
 import passport from './utills/passport-setup.js';
 dotenv.config(); // Load environment variables from .env file
@@ -46,6 +47,7 @@ app.use('/api/auth', authRoutes); // Authentication routes
 app.use('/api/hunts', huntRoutes); // Hunt routes
 app.use('/api/chat', chatRoutes); // Chat routes
 app.use('/api/team', teamroutes);
+app.use('/api/photohunt', photoroutes);
 // Start server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

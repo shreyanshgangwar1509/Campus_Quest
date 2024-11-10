@@ -1,4 +1,5 @@
-import Hunt from "../models/Hunt.model.js";
+import mongoose from "mongoose";
+import { Hunt, LeaderboardEntry } from "../models/Hunt.model.js";
 import presetHunts from '../utills/PreSetHunts.js';
 
 
@@ -27,6 +28,8 @@ export const createHunt = async (req, res) => {
 
 // Get all hunts
 export const getAllHunts = async (req, res) => {
+    console.log('now getting all hunts');
+    
     try {
         const hunts = await Hunt.find();
         res.status(200).json(hunts);
@@ -49,29 +52,68 @@ export const getHuntById = async (req, res) => {
 };
 
 // Update leaderboard
+
 export const updateLeaderboard = async (req, res) => {
-    const { userId, score, time } = req.body;
+    const { userId, score, time, difficulty, host } = req.body; // Include difficulty and host if they are part of the request
+    console.log('Leaderboard is updating');
+    console.log(userId, score, time, difficulty, host);
+
     try {
+        // Ensure difficulty is a single string and not an array
+        if (Array.isArray(difficulty)) {
+            return res.status(400).json({ error: 'Difficulty should be a single value, not an array.' });
+        }
+
+        // Ensure host is provided
+        if (!host) {
+            return res.status(400).json({ error: 'Host is required.' });
+        }
+
+        // Find the hunt by ID
         const hunt = await Hunt.findById(req.params.id);
         if (!hunt) {
             return res.status(404).json({ message: 'Hunt not found' });
         }
-        hunt.leaderboard.push({ user: userId, score, time });
+        console.log('Just before pushing data');
+
+        // Create a new leaderboard entry using the LeaderboardEntry model
+        const newEntry = new LeaderboardEntry({
+            user: new mongoose.Types.ObjectId(userId),  // Corrected here
+            score,
+            time,
+        });
+
+        // Save the new entry to the database (if necessary, depending on your logic)
+        await newEntry.save();  // If needed, you can save this entry individually
+
+        // Push the new entry's ObjectId to the leaderboard array
+        hunt.leaderboard.push(newEntry._id);
+        console.log('Data pushed:', hunt.leaderboard);
+
+        // Save the hunt document to persist changes
         await hunt.save();
+
+        // Log and send the response
+        console.log('Hunt leaderboard after saving:', hunt.leaderboard);
+        console.log('Data saved successfully');
+        
         res.status(201).json(hunt.leaderboard);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        console.error('Error while updating leaderboard:', error);
+        res.status(400).json({ error: error.message });
     }
 };
 
 // Get leaderboard
 export const getLeaderboard = async (req, res) => {
+    console.log('trying to get leaderborad');
+    
     try {
         const hunt = await Hunt.findById(req.params.id).populate('leaderboard.user');
-        const leaderboard = hunt.leaderboard.sort((a, b) => b.score - a.score);
+        const leaderboard = hunt.leaderboard //.sort((a, b) => b.score - a.score);
         res.status(200).json(leaderboard);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        res.status(400).json({ error: error.message });
     }
 };
 // Import preset hunts
@@ -81,7 +123,7 @@ export const presethunt =  async (req, res) => {
         await Hunt.insertMany(presetHunts);
         res.status(201).json({ message: 'Pre-set hunts added successfully.' });
     } catch (error) {
-        res.status(500).json({ message: 'Error adding pre-set hunts.', error });
+        res.status(400).json({ message: 'Error adding pre-set hunts.', error });
     }
 };
 

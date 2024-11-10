@@ -41,10 +41,13 @@ function HuntForm() {
         answers: answersArray,
         hints: hintsArray,
     };
-
+const token = localStorage.getItem('token'); 
         try {
-            const response = await api.post('/api/hunts/createhunt', huntData);
-            
+           const response = await axios.post('/api/hunts/createhunt', huntData, {
+    headers: {
+      Authorization: `Bearer ${token}`, // Include the Bearer token here
+    },
+  });
             console.log(response.data); // For now, just log the data
             navigate('/allhunts');
             alert("Hunt created successfully!");
