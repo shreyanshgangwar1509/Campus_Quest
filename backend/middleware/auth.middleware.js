@@ -29,7 +29,6 @@
 
 import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
-
 dotenv.config();
 
 const authMiddleware = (req, res, next) => {
@@ -44,6 +43,8 @@ const authMiddleware = (req, res, next) => {
     try {
         // Verify the token
         const decoded = jwt.verify(token, process.env.JWT_SECERET);
+        console.log(decoded);
+        
         req.user = decoded; // Attach decoded user data to the request
         next(); 
     } catch (error) {

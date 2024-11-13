@@ -4,7 +4,9 @@ import User from "../models/User.model.js";
 
 const createTeam = async (req, res, next) => {
   const { teamName } = req.body;
-  const userId = req.userId;
+  const userId = req.user.userId;
+  console.log(userId);
+  
   console.log(req.body);
   
   if (!teamName) {
@@ -19,7 +21,6 @@ const createTeam = async (req, res, next) => {
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-
     // Create a 6-digit unique team code
     const teamCode = Math.floor(100000 + Math.random() * 900000).toString();
 
@@ -39,8 +40,12 @@ const createTeam = async (req, res, next) => {
 };
 
 const deleteTeam = async (req, res, next) => {
-  const { teamId } = req.params;
-  const userId = req.userId;
+  const { teamId } = req.body;
+  const userId = req.user.userId;
+  console.log(teamId);
+  console.log(userId);
+  
+  
   if (!teamId) {
     return res.status(400).json({
       success: false,
@@ -56,7 +61,7 @@ const deleteTeam = async (req, res, next) => {
   }
 
   try {
-    const tm = await Team.findById({ _id: teamId })
+    const tm = await Team.findOne({ teamName: teamId })
 
     if (!tm) {
       return res.status(404).json({
@@ -152,22 +157,6 @@ const jointeam = async (req, res) => {
     return res.status(500).json({ message: "Server error", error: error.message });
   }
 };
-// const jointeam = async (req, res) => {
-//   const { teamCode ,userId} = req.params;
-//   // const { userId } = req.body;
-//   try {
-//     const tm = await Team.findOne({ teamCode: teamCode });
-//     if (!tm) {
-//       res.status(400).json({message:"invalid team invitaion code"})
-//     }
-//     const user = User.findById({ _id: userId });
-
-//     tm.addmember(user);
-//     res.status(200).json({ message: "User joined successfully" });
-//   } catch (error) {
-//     res.status(500).json({ message: "Error in joining team " });
-//   }
-// }
 
 const leaveTeam = async (req, res, next) => {
   const {  teamId } = req.body;
@@ -246,7 +235,6 @@ const leaveTeam = async (req, res, next) => {
     });
   }
 };
-
 
 
 

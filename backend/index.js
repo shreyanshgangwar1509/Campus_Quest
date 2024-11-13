@@ -10,6 +10,7 @@ import chatRoutes from './Routes/chat.routes.js';
 import huntRoutes from './Routes/hunt.routes.js';
 import photoroutes from './Routes/photoChallenge.routes.js';
 import teamroutes from './Routes/team.routes.js';
+import { app } from './socket/socket.js';
 import passport from './utills/passport-setup.js';
 dotenv.config(); // Load environment variables from .env file
 
@@ -22,7 +23,7 @@ try {
   process.exit(1); // Exit process if DB connection fails
 }
 
-const app = express();
+// const app = express();
 
 // Middleware setup
 app.use(express.json()); // For parsing JSON requests

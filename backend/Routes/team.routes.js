@@ -4,7 +4,7 @@ import authMiddleware from "../middleware/auth.middleware.js";
 const router = express.Router();
 console.log('Team routes called');
 
-router.post("/createTeam", authMiddleware,createTeam); 
+router.post("/createTeam",authMiddleware,createTeam); 
 router.delete("/delete/:teamId/:userId",authMiddleware, deleteTeam); 
 router.post("/leaveTeam", authMiddleware,leaveTeam);
 router.post("/jointeam/:teamId",authMiddleware,jointeam)
