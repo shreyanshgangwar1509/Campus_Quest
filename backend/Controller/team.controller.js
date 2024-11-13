@@ -237,7 +237,6 @@ const leaveTeam = async (req, res, next) => {
 };
 
 
-
 export {
   createTeam, deleteTeam, jointeam, leaveTeam, teammember
 };

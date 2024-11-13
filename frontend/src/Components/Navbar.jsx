@@ -8,18 +8,20 @@ const api = axios.create({
 
 const Navbar = () => {
   const [token, setToken] = useState(localStorage.getItem('token'));
+  const [logou, isloggoedout] = useState(false);
   const navigate = useNavigate();
 
   const logout = async () => {
     try {
-      
+      isloggoedout(true);
+      localStorage.removeItem('token');
       await api.post('/api/auth/logout', {}, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
 
-      localStorage.removeItem('token');
+      
       setToken(null);
       navigate('/');
     } catch (error) {
@@ -33,7 +35,7 @@ const Navbar = () => {
     } else {
       setToken(null);
     }
-  }, [token,navigate]);
+  }, [token, navigate,logou]);
 
   return (
     <nav className="flex items-center justify-between p-2 bg-blue-500 text-white">
@@ -42,9 +44,7 @@ const Navbar = () => {
         <Link to="/allhunts" className="px-4 py-1 bg-green-500 rounded hover:bg-blue-600">
            Hunts
         </Link>
-        <Link to="/map" className="px-4 py-1 bg-green-500 rounded hover:bg-blue-600" >
-          Map
-        </Link>
+        
         <Link to="/events" className="px-4 py-1 bg-green-500 rounded hover:bg-blue-600">
           Events
         </Link>
@@ -54,16 +54,12 @@ const Navbar = () => {
         <Link to="/dashboard" className="px-4 py-1 bg-green-500 rounded hover:bg-blue-600">
           Dashboard
         </Link>
-        <Link to="/createhunt" className="px-4 py-1 bg-green-500 rounded hover:bg-blue-600">
-          Create Hunt
-        </Link>
-
         {!token ? (
           <Link to="/login" className="px-4 py-1 bg-green-700 rounded hover:bg-blue-600">
             Login
           </Link>
         ) : (
-          <button onClick={logout} className="px-4 py-1 bg-red-700 rounded hover:bg-red-400">
+          <button onClick={logout}  className="px-4 py-1 bg-red-700 rounded hover:bg-red-400">
             Logout
           </button>
         )}
