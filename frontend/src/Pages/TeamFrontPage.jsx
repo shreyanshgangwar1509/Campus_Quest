@@ -45,6 +45,7 @@ const TeamFrontPage = () => {
       alert('Error deleting team');
     }
   };
+  
   const joinTeam = async() => {
     try {
       const response = await axios.post('http://localhost:3000/api/team/jointeam', { TeamCode }, {
@@ -60,31 +61,36 @@ const TeamFrontPage = () => {
   
 
   return (
-    <div className="p-8 space-y-8 bg-gray-50 min-h-screen">
-      <h1 className="text-4xl font-bold text-gray-800 mb-6">Team Management</h1>
+    <div className="p-1 space-y-1 bg-gray-50 flex ">
+
       {/* Team Creation Section */}
-      <div className="p-6 bg-white shadow rounded-lg">
-        <h2 className="text-2xl font-semibold mb-4">Create a Team</h2>
+      <div className="p-6 bg-white shadow rounded-lg w-96 ">
+        <h2 className="text-lg font-semibold ">Create a Team</h2>
         <input
           type="text"
-          placeholder="Team Name"
+          placeholder=" Team Name"
           value={teamName}
           onChange={(e) => setTeamName(e.target.value)}
-          className="w-full p-2 mb-2 border border-gray-300 rounded"
+          className="w-full  mb-1 border border-gray-300 rounded"
         />
-        {/* <input
+        <button onClick={createTeam} className="text-sm w-full bg-indigo-600 text-white  p-1 rounded hover:bg-indigo-700">Create Team</button>
+      </div>
+
+      <div className="p-6 bg-white shadow rounded-lg w-96">
+        <h2 className="text-lg font-semibold ">Delete Team</h2>
+        <input
           type="text"
-          placeholder="Leader ID"
-          value={leaderId}
-          onChange={(e) => setLeaderId(e.target.value)}
-          className="w-full p-2 mb-2 border border-gray-300 rounded"
-        /> */}
-        <button onClick={createTeam} className="w-full bg-indigo-600 text-white p-2 rounded hover:bg-indigo-700">Create Team</button>
+          placeholder=" Team Name"
+          value={teamName}
+          onChange={(e) => setTeamName(e.target.value)}
+          className="w-full  mb-1 border border-gray-300 rounded"
+        />
+        <button onClick={deleteTeam} className="text-sm w-full bg-red-600 text-white  p-1 rounded hover:bg-red-700">Delete Team</button>
       </div>
 
       
 
-      {/* Delete Team */}
+      {/* Delete Team
       <div className="p-6 bg-white shadow rounded-lg">
         <h2 className="text-2xl font-semibold mb-4">Delete Team</h2>
         <input
@@ -94,16 +100,24 @@ const TeamFrontPage = () => {
           onChange={(e) => setTeamId(e.target.value)}
           className="w-full p-2 mb-2 border border-gray-300 rounded"
         />
-        {/* <input
-          type="text"
-          placeholder="User ID"
-          value={userId}
-          onChange={(e) => setUserId(e.target.value)}
-          className="w-full p-2 mb-2 border border-gray-300 rounded"
-        /> */}
+       
         <button onClick={deleteTeam} className="w-full bg-red-600 text-white p-2 rounded hover:bg-red-700">Delete Team</button>
+      </div> */}
+
+       <div className="p-6 bg-white shadow rounded-lg w-96">
+        <h2 className="text-lg font-semibold ">Join Team</h2>
+        <input
+          type="text"
+          placeholder=" Team Name"
+          value={teamName}
+          onChange={(e) => setTeamName(e.target.value)}
+          className="w-full  mb-1 border border-gray-300 rounded"
+        />
+        <button onClick={joinTeam} className="text-sm w-full bg-green-600 text-white  p-1 rounded hover:bg-green-700">Join Team</button>
       </div>
-      <div className="p-6 bg-white shadow rounded-lg">
+
+
+      {/* <div className="p-6 bg-white shadow rounded-lg">
         <h2 className="text-2xl font-semibold mb-4">Join Team</h2>
         <input
           type="text"
@@ -114,7 +128,7 @@ const TeamFrontPage = () => {
         />
         
         <button onClick={joinTeam} className="w-full bg-green-600 text-white p-2 rounded hover:bg-gray-700">Join Team</button>
-      </div>
+      </div> */}
     </div>
   );
 };
