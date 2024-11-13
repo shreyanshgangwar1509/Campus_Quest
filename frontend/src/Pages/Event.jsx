@@ -1,7 +1,7 @@
 // pages/events.js
 import React from 'react';
-import EventCard from '../Components/EventCard';
 import { Link } from 'react-router-dom';
+import EventCard from '../Components/EventCard';
 
 const events = [
   {
@@ -15,11 +15,11 @@ const events = [
     category: "Workshop",
     hunts: [
       {
-        title: "AI Basics",
-        host: "John Doe",
-        description: "Introductory challenges in AI.",
-        questions: ["What is AI?", "Define Machine Learning."],
-        answers: ["Artificial Intelligence", "A subset of AI"],
+        title: "Culrav - Aviskhar Quiz",
+        host: "Shreyansh Gangwar",
+        description: "Introductory challenges in Culrav - Avishkar.",
+        questions: ["What is culrav", "What is Avishkar"],
+        answers: ["Cultural fest ", "Tech Fest"],
         hints: ["Think robots", "It's about data"],
         difficulty: "easy",
         solved: 10,

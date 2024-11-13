@@ -10,7 +10,7 @@ const Map = () => {
     // Only initialize the map if it hasn't been initialized already
     if (!mapRef.current) {
       // Initialize the map container
-      mapRef.current = L.map(mapContainerRef.current).setView([25.492394,81.864742], 17);
+      mapRef.current = L.map(mapContainerRef.current).setView([25.492757,81.866856], 17);
 
       // Add tile layer
       L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -43,7 +43,7 @@ const Map = () => {
 
         // Create and add new marker and circle
         marker = L.marker([lat, lng]).addTo(mapRef.current);
-        circle = L.circle([lat, lng], { radius: accuracy }).addTo(mapRef.current);
+        circle = L.circle([lat, lng], { radius: 4 }).addTo(mapRef.current);
 
         // Adjust map to fit bounds of the circle
         mapRef.current.fitBounds(circle.getBounds());

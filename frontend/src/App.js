@@ -10,6 +10,7 @@ import Leaderboard from './Components/LeaderBoard';
 import Map from './Components/Map';
 import Navbar from './Components/Navbar';
 import PhotoChallengeForm from './Components/PhotoChallengeForm';
+import Stories from './Components/Story';
 import LoginPage from './Pages/Auth/Login';
 import RegisterPage from './Pages/Auth/Register';
 import CreateHunt from './Pages/CreateHunt';
@@ -43,6 +44,7 @@ function App() {
         <Route path='/profile' element={<Profile/>}/>
         <Route path='/eventform' element={<EventForm />} />
         <Route path='/photochallengeform' element={<PhotoChallengeForm />} />
+        <Route path='/story' element={<Stories/>}/>
             </Routes>
     </Router>
     

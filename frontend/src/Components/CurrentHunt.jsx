@@ -1,24 +1,26 @@
+import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import React, { useState, useEffect } from 'react';
-import QuestionDisplay from './QuestionDisplay';
 import HuntTimer from './HuntTimer';
+import QuestionDisplay from './QuestionDisplay';
 
 function CurrentHunt() {
     const location = useLocation();
-    const { hunt } = location.state || {};
+    const  hunt  = location.state || {};
+    console.log(hunt);
+    
     
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [wrongAttempts, setWrongAttempts] = useState(0);
     const [isHuntComplete, setIsHuntComplete] = useState(false);
-
+    
     const handleAnswerSubmit = (userAnswer) => {
-        if (userAnswer.toLowerCase() === hunt.questions[currentQuestionIndex].answer.toLowerCase()) {
+        if (userAnswer.toLowerCase() === hunt.Answers[currentQuestionIndex].toLowerCase()) {
             alert("Correct answer!");
             setCurrentQuestionIndex((prevIndex) => prevIndex + 1); // Move to next question
             setWrongAttempts(0); // Reset wrong attempts
             
             // Check if hunt is complete
-            if (currentQuestionIndex + 1 === hunt.questions.length) {
+            if (currentQuestionIndex + 1 === hunt.Questions.length) {
                 setIsHuntComplete(true);
             }
         } else {
@@ -37,9 +39,10 @@ function CurrentHunt() {
                     {/* Display the HuntTimer component */}
                     <HuntTimer isActive={!isHuntComplete} />
 
-                    {currentQuestionIndex < hunt.questions.length ? (
+                    {currentQuestionIndex < hunt.Questions.length ? (
                         <QuestionDisplay 
-                            questionData={hunt.questions[currentQuestionIndex]} 
+                            questionData={hunt.Questions[currentQuestionIndex]} 
+                            Hint={hunt.Hint1[currentQuestionIndex]}
                             onSubmit={handleAnswerSubmit} 
                             wrongAttempts={wrongAttempts}
                         />

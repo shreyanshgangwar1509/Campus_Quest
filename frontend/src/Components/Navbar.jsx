@@ -42,8 +42,14 @@ const Navbar = () => {
         <Link to="/allhunts" className="px-4 py-1 bg-green-500 rounded hover:bg-blue-600">
            Hunts
         </Link>
+        <Link to="/map" className="px-4 py-1 bg-green-500 rounded hover:bg-blue-600" >
+          Map
+        </Link>
         <Link to="/events" className="px-4 py-1 bg-green-500 rounded hover:bg-blue-600">
           Events
+        </Link>
+        <Link to="/story" className="px-4 py-1 bg-green-500 rounded hover:bg-blue-600">
+          Story
         </Link>
         <Link to="/dashboard" className="px-4 py-1 bg-green-500 rounded hover:bg-blue-600">
           Dashboard

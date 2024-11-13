@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function QuestionDisplay({ questionData, onSubmit, wrongAttempts }) {
+function QuestionDisplay({ questionData,answerdata,Hint,curr, onSubmit, wrongAttempts }) {
     const [userAnswer, setUserAnswer] = useState('');
     const [showHint, setShowHint] = useState(false);
 
@@ -11,7 +11,7 @@ function QuestionDisplay({ questionData, onSubmit, wrongAttempts }) {
     return (
         <div>
             <p className="font-semibold mb-2">Question:</p>
-            <p className="text-gray-800 mb-4">{questionData.question}</p>
+            <p className="text-gray-800 mb-4">{questionData}</p>
 
             <input
                 type="text"
@@ -36,7 +36,7 @@ function QuestionDisplay({ questionData, onSubmit, wrongAttempts }) {
             </button>
 
             {showHint && (
-                <p className="text-sm text-gray-600 mt-2">Hint: {questionData.hint}</p>
+                <p className="text-sm text-gray-600 mt-2">Hint: {Hint}</p>
             )}
 
             {wrongAttempts > 0 && (

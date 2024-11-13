@@ -8,12 +8,11 @@ import {
     presethunt,
     updateLeaderboard,
 } from '../Controller/hunt.controller.js';
-import authMiddleware from '../middleware/auth.middleware.js';
 
 const router = express.Router();
 
 // Create a new hunt
-router.post('/createhunt', authMiddleware,createHunt);
+router.post('/createhunt',createHunt);
 
 // Get all hunts
 router.get('/getallhunt', getAllHunts);
