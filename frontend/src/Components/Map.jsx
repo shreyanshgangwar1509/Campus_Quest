@@ -1,29 +1,37 @@
 import L from "leaflet";
+import markerIcon from "leaflet/dist/images/marker-icon.png";
+import markerShadow from "leaflet/dist/images/marker-shadow.png";
 import "leaflet/dist/leaflet.css";
 import React, { useEffect, useRef } from "react";
 
 const Map = () => {
-  const mapRef = useRef(null); // Reference to store map instance
-  const mapContainerRef = useRef(null); // Reference to store map container (DOM element)
+  const mapRef = useRef(null);
+  const mapContainerRef = useRef(null);
+
+  const defaultIcon = L.icon({
+    iconUrl: markerIcon,
+    shadowUrl: markerShadow,
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+  });
 
   useEffect(() => {
-    // Only initialize the map if it hasn't been initialized already
     if (!mapRef.current) {
-      // Initialize the map container
-      mapRef.current = L.map(mapContainerRef.current).setView([25.492757,81.866856], 17);
+      mapRef.current = L.map(mapContainerRef.current).setView(
+        [25.492757, 81.866856],
+        17
+      );
 
-      // Add tile layer
-      L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
         maxZoom: 19,
-        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
       }).addTo(mapRef.current);
     }
 
     return () => {
-      // Clean up map instance on component unmount
       if (mapRef.current) {
         mapRef.current.remove();
-        mapRef.current = null; // Reset the mapRef
+        mapRef.current = null;
       }
     };
   }, []);
@@ -37,44 +45,47 @@ const Map = () => {
         const lng = pos.coords.longitude;
         const accuracy = pos.coords.accuracy;
 
-        // Remove previous marker and circle if any
+        // Remove previous marker and circle
         if (marker) mapRef.current.removeLayer(marker);
         if (circle) mapRef.current.removeLayer(circle);
 
-        // Create and add new marker and circle
-        marker = L.marker([lat, lng]).addTo(mapRef.current);
-        circle = L.circle([lat, lng], { radius: 4 }).addTo(mapRef.current);
+        // Create marker with default icon
+        marker = L.marker([lat, lng], { icon: defaultIcon }).addTo(mapRef.current);
+        circle = L.circle([lat, lng], { radius: accuracy }).addTo(mapRef.current);
 
-        // Adjust map to fit bounds of the circle
         mapRef.current.fitBounds(circle.getBounds());
       };
 
       const error = (err) => {
-        if (err.code === 1) {
-          alert("Please allow geolocation access");
-        } else {
-          alert("Can't get current location");
-          console.log(err);
-        }
+        console.error("Geolocation error:", err);
+        alert("An error occurred while accessing geolocation.");
       };
 
-      // Watch position and update map on geolocation change
-      const watchId = navigator.geolocation.watchPosition(success, error);
+      if ("geolocation" in navigator) {
+        const watchId = navigator.geolocation.watchPosition(success, error, {
+          enableHighAccuracy: true,
+          timeout: 20000,
+          maximumAge: 0,
+        });
 
-      // Cleanup function for geolocation
-      return () => {
-        navigator.geolocation.clearWatch(watchId);
-      };
+        return () => {
+          navigator.geolocation.clearWatch(watchId);
+        };
+      } else {
+        alert("Geolocation is not supported by your browser.");
+      }
     }
   }, []);
 
   return (
     <div>
-      <h1 className="relative text-2xl items-center justify-cnenter flex ">Hunt Page</h1>
+      <h1 className="relative text-2xl items-center justify-center flex">
+        Hunt Page
+      </h1>
       <div
         ref={mapContainerRef}
         id="map"
-        style={{ height: "1000px" }} // Make sure to specify height for the map
+        style={{ height: "1000px", width: "100%" }}
       ></div>
     </div>
   );

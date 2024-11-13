@@ -7,6 +7,7 @@ import CurrentHunt from './Components/CurrentHunt';
 import Dashboard from './Components/Dashboard';
 import EventForm from './Components/EventForm';
 import Leaderboard from './Components/LeaderBoard';
+import LocationComponent from './Components/location/Location';
 import Map from './Components/Map';
 import Navbar from './Components/Navbar';
 import PhotoChallengeForm from './Components/PhotoChallengeForm';
@@ -44,7 +45,9 @@ function App() {
         <Route path='/profile' element={<Profile/>}/>
         <Route path='/eventform' element={<EventForm />} />
         <Route path='/photochallengeform' element={<PhotoChallengeForm />} />
-        <Route path='/story' element={<Stories/>}/>
+        <Route path='/story' element={<Stories />} />
+        <Route path='/currentlocation' element={<LocationComponent />} />
+        
             </Routes>
     </Router>
     
