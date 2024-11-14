@@ -9,8 +9,8 @@ const HuntCard = ({ title, host, description, difficulty, questionsCount, solved
                     Host: {host}
                 </p>
                 <p className="text-gray-600 text-sm mb-4">{description}</p>
-                <p className="text-gray-600 text-sm">Difficulty: <span className={`font-semibold ${difficulty === "easy" ? "text-green-500" : difficulty === "medium" ? "text-yellow-500" : "text-red-500"}`}>{difficulty}</span></p>
-                <p className="text-gray-600 text-sm">Questions: {questionsCount} | Solved: {solved}</p>
+                {/* <p className="text-gray-600 text-sm">Difficulty: <span className={`font-semibold ${difficulty === "easy" ? "text-green-500" : difficulty === "medium" ? "text-yellow-500" : "text-red-500"}`}>{difficulty}</span></p>
+                <p className="text-gray-600 text-sm">Questions: {questionsCount} | Solved: {solved}</p> */}
             </div>
             
         </div>
